@@ -129,4 +129,8 @@
 		select distinct `type` , description from sys_dict
 	</select>
 
+	<select id="listType_en" resultType="com.bootdo.common.domain.DictDO">
+		select distinct `type` , description from sys_dict_en
+	</select>
+
 </mapper>
