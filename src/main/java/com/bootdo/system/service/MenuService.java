@@ -15,6 +15,8 @@ public interface MenuService {
 
 	List<Tree<MenuDO>> listMenuTree(Long id);
 
+	List<Tree<MenuDO>> listMenuTree_en(Long id);
+
 	Tree<MenuDO> getTree();
 
 	Tree<MenuDO> getTree(Long id);
