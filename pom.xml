@@ -4,14 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.zkr</groupId>
-    <artifactId>jhrf_usercenter</artifactId>
+    <artifactId>customercenter</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>usercenter</name>
-    <description>P03  jhrf_usercenter</description>
+    <name>CustomerCenter</name>
+    <description>P03  jhrf_CustomerCenter</description>
 
-    <parent>
+    <parent> 
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.5.9.RELEASE</version>
