@@ -1,10 +1,10 @@
 package com.bootdo.common.service;
 
-import java.util.List;
-import java.util.Map;
-
 import com.bootdo.common.domain.DictDO;
 import com.bootdo.system.domain.UserDO;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 字典表
@@ -30,7 +30,9 @@ public interface DictService {
 	int batchRemove(Long[] ids);
 
 	List<DictDO> listType();
-	
+
+	List<DictDO> listType_en();
+
 	String getName(String type,String value);
 
 	/**
