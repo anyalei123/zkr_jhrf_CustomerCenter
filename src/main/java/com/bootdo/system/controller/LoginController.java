@@ -1,6 +1,15 @@
 package com.bootdo.system.controller;
 
-import io.swagger.models.auth.In;
+import com.bootdo.common.annotation.Log;
+import com.bootdo.common.controller.BaseController;
+import com.bootdo.common.domain.FileDO;
+import com.bootdo.common.domain.Tree;
+import com.bootdo.common.service.FileService;
+import com.bootdo.common.utils.MD5Utils;
+import com.bootdo.common.utils.R;
+import com.bootdo.common.utils.ShiroUtils;
+import com.bootdo.system.domain.MenuDO;
+import com.bootdo.system.service.MenuService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -13,19 +22,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-import com.bootdo.common.annotation.Log;
-import com.bootdo.common.controller.BaseController;
-import com.bootdo.common.domain.FileDO;
-import com.bootdo.common.domain.Tree;
-import com.bootdo.common.service.FileService;
-import com.bootdo.common.utils.MD5Utils;
-import com.bootdo.common.utils.R;
-import com.bootdo.common.utils.ShiroUtils;
-import com.bootdo.system.domain.MenuDO;
-import com.bootdo.system.service.MenuService;
-
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 public class LoginController extends BaseController {
@@ -43,9 +45,37 @@ public class LoginController extends BaseController {
 	}
 
 	@Log("请求访问主页")
-	@GetMapping({ "/index" })
-	String index(Model model) {
-		List<Tree<MenuDO>> menus = menuService.listMenuTree(getUserId());
+	@GetMapping({ "/index_zh" })
+	public String index_zh(Model model, HttpServletRequest request) {
+		String locale = request.getLocale().toString();
+		/*Object language = request.getSession().getAttribute
+				(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME);*/
+		List<Tree<MenuDO>> menus = new ArrayList<>();
+		if("zh_CN".equals(locale)){
+			menus = menuService.listMenuTree(getUserId());
+		}
+		if("en".equals(locale)){
+			menus = menuService.listMenuTree_en(getUserId());
+		}
+		model.addAttribute("menus", menus);
+		model.addAttribute("name", getUser().getName());
+		FileDO fileDO = fileService.get(getUser().getPicId());
+		if(fileDO!=null&&fileDO.getUrl()!=null){
+			if(fileService.isExist(fileDO.getUrl())){
+				model.addAttribute("picUrl",fileDO.getUrl());
+			}else {
+				model.addAttribute("picUrl","/img/photo_s.jpg");
+			}
+		}else {
+			model.addAttribute("picUrl","/img/photo_s.jpg");
+		}
+		model.addAttribute("username", getUser().getUsername());
+		return "index_v1";
+	}
+	@Log("请求访问主页")
+	@GetMapping({ "/index_en" })
+	public String index_en(Model model) {
+		List<Tree<MenuDO>> menus = menuService.listMenuTree_en(getUserId());
 		model.addAttribute("menus", menus);
 		model.addAttribute("name", getUser().getName());
 		FileDO fileDO = fileService.get(getUser().getPicId());
