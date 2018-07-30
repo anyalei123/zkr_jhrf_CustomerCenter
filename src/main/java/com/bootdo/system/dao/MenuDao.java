@@ -33,4 +33,11 @@ public interface MenuDao {
 	List<MenuDO> listMenuByUserId(Long id);
 	
 	List<String> listUserPerms(Long id);
+	
+	List<MenuDO> listMenuByUserId_en(Long id);
+	List<MenuDO> listMenuByUserId_zh(Long id);
+	
+	
+	
+	
 }
