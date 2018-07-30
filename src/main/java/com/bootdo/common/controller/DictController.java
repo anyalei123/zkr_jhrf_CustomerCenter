@@ -1,18 +1,21 @@
 package com.bootdo.common.controller;
 
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
 import com.bootdo.common.config.Constant;
 import com.bootdo.common.domain.DictDO;
 import com.bootdo.common.service.DictService;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
+import com.bootdo.common.utils.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -122,10 +125,37 @@ public class DictController extends BaseController {
 		return R.ok();
 	}
 
+	/**
+	 * 新增国际化方法
+	 * @param
+	 * @return
+	 * @author ayl
+	 * @create 2018-07-30 12:36:46
+	 */
 	@GetMapping("/type")
 	@ResponseBody
-	public List<DictDO> listType() {
-		return dictService.listType();
+	public List<DictDO> listType(HttpServletRequest request) {
+		String language_mark = request.getParameter("language_mark");
+		Object language = request.getSession().getAttribute
+				(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME);
+		String locale = request.getLocale().toString();
+		List<DictDO> dictList = new ArrayList<>();
+		if("zh_CN".equals(locale)){
+			dictList = dictService.listType();
+		}
+		if("en".equals(locale)){
+			dictList = dictService.listType_en();
+		}
+		if(StringUtils.isBlank(language_mark) && language != null){
+			if("zh_CN".equals(language.toString())){
+				dictList = dictService.listType();
+			}
+			if("en_US".equals(language.toString())){
+				dictList = dictService.listType_en();
+			}
+		}
+
+		return dictList;
 	};
 
 	// 类别已经指定增加
