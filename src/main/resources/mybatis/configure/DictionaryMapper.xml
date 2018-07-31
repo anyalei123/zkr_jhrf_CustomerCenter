@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="om.zkr.ins.account.dao.mapper.auto.DictionaryMapper">
+  <resultMap id="BaseResultMap" type="com.zkr.ins.account.domain.model.Dictionary">
+    <!--
+      WARNING - @mbggenerated
+      Generated on 2018-07-31 17:46:59.
+    -->
+    <id column="dict_id" jdbcType="VARCHAR" property="dict_id" />
+    <result column="dict_name" jdbcType="VARCHAR" property="dict_name" />
+    <result column="type_id" jdbcType="VARCHAR" property="type_id" />
+    <result column="dict_desc" jdbcType="VARCHAR" property="dict_desc" />
+    <result column="dict_sort" jdbcType="DECIMAL" property="dict_sort" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+    <result column="create_by" jdbcType="VARCHAR" property="create_by" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="update_time" />
+    <result column="update_by" jdbcType="VARCHAR" property="update_by" />
+    <result column="del_flag" jdbcType="CHAR" property="del_flag" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbggenerated
+      Generated on 2018-07-31 17:46:59.
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbggenerated
+      Generated on 2018-07-31 17:46:59.
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbggenerated
+      Generated on 2018-07-31 17:46:59.
+    -->
+    dict_id, dict_name, type_id, dict_desc, dict_sort, create_time, create_by, update_time, 
+    update_by, del_flag, remarks
+  </sql>
+  <select id="selectByExample" parameterType="com.zkr.ins.account.domain.model.DictionaryCriteria" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbggenerated
+      Generated on 2018-07-31 17:46:59.
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from dictionary
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbggenerated
+      Generated on 2018-07-31 17:46:59.
+    -->
+    select 
+    <include refid="Base_Column_List" />
+    from dictionary
+    where dict_id = #{dict_id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!--
+      WARNING - @mbggenerated
+      Generated on 2018-07-31 17:46:59.
+    -->
+    delete from dictionary
+    where dict_id = #{dict_id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zkr.ins.account.domain.model.DictionaryCriteria">
+    <!--
+      WARNING - @mbggenerated
+      Generated on 2018-07-31 17:46:59.
+    -->
+    delete from dictionary
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zkr.ins.account.domain.model.Dictionary">
+    <!--
+      WARNING - @mbggenerated
+      Generated on 2018-07-31 17:46:59.
+    -->
+    insert into dictionary (dict_id, dict_name, type_id, 
+      dict_desc, dict_sort, create_time, 
+      create_by, update_time, update_by, 
+      del_flag, remarks)
+    values (#{dict_id,jdbcType=VARCHAR}, #{dict_name,jdbcType=VARCHAR}, #{type_id,jdbcType=VARCHAR}, 
+      #{dict_desc,jdbcType=VARCHAR}, #{dict_sort,jdbcType=DECIMAL}, #{create_time,jdbcType=TIMESTAMP}, 
+      #{create_by,jdbcType=VARCHAR}, #{update_time,jdbcType=TIMESTAMP}, #{update_by,jdbcType=VARCHAR}, 
+      #{del_flag,jdbcType=CHAR}, #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zkr.ins.account.domain.model.Dictionary">
+    <!--
+      WARNING - @mbggenerated
+      Generated on 2018-07-31 17:46:59.
+    -->
+    insert into dictionary
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dict_id != null">
+        dict_id,
+      </if>
+      <if test="dict_name != null">
+        dict_name,
+      </if>
+      <if test="type_id != null">
+        type_id,
+      </if>
+      <if test="dict_desc != null">
+        dict_desc,
+      </if>
+      <if test="dict_sort != null">
+        dict_sort,
+      </if>
+      <if test="create_time != null">
+        create_time,
+      </if>
+      <if test="create_by != null">
+        create_by,
+      </if>
+      <if test="update_time != null">
+        update_time,
+      </if>
+      <if test="update_by != null">
+        update_by,
+      </if>
+      <if test="del_flag != null">
+        del_flag,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dict_id != null">
+        #{dict_id,jdbcType=VARCHAR},
+      </if>
+      <if test="dict_name != null">
+        #{dict_name,jdbcType=VARCHAR},
+      </if>
+      <if test="type_id != null">
+        #{type_id,jdbcType=VARCHAR},
+      </if>
+      <if test="dict_desc != null">
+        #{dict_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="dict_sort != null">
+        #{dict_sort,jdbcType=DECIMAL},
+      </if>
+      <if test="create_time != null">
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="create_by != null">
+        #{create_by,jdbcType=VARCHAR},
+      </if>
+      <if test="update_time != null">
+        #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_by != null">
+        #{update_by,jdbcType=VARCHAR},
+      </if>
+      <if test="del_flag != null">
+        #{del_flag,jdbcType=CHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zkr.ins.account.domain.model.DictionaryCriteria" resultType="java.lang.Integer">
+    <!--
+      WARNING - @mbggenerated
+      Generated on 2018-07-31 17:46:59.
+    -->
+    select count(*) from dictionary
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbggenerated
+      Generated on 2018-07-31 17:46:59.
+    -->
+    update dictionary
+    <set>
+      <if test="record.dict_id != null">
+        dict_id = #{record.dict_id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dict_name != null">
+        dict_name = #{record.dict_name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type_id != null">
+        type_id = #{record.type_id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dict_desc != null">
+        dict_desc = #{record.dict_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dict_sort != null">
+        dict_sort = #{record.dict_sort,jdbcType=DECIMAL},
+      </if>
+      <if test="record.create_time != null">
+        create_time = #{record.create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.create_by != null">
+        create_by = #{record.create_by,jdbcType=VARCHAR},
+      </if>
+      <if test="record.update_time != null">
+        update_time = #{record.update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.update_by != null">
+        update_by = #{record.update_by,jdbcType=VARCHAR},
+      </if>
+      <if test="record.del_flag != null">
+        del_flag = #{record.del_flag,jdbcType=CHAR},
+      </if>
+      <if test="record.remarks != null">
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbggenerated
+      Generated on 2018-07-31 17:46:59.
+    -->
+    update dictionary
+    set dict_id = #{record.dict_id,jdbcType=VARCHAR},
+      dict_name = #{record.dict_name,jdbcType=VARCHAR},
+      type_id = #{record.type_id,jdbcType=VARCHAR},
+      dict_desc = #{record.dict_desc,jdbcType=VARCHAR},
+      dict_sort = #{record.dict_sort,jdbcType=DECIMAL},
+      create_time = #{record.create_time,jdbcType=TIMESTAMP},
+      create_by = #{record.create_by,jdbcType=VARCHAR},
+      update_time = #{record.update_time,jdbcType=TIMESTAMP},
+      update_by = #{record.update_by,jdbcType=VARCHAR},
+      del_flag = #{record.del_flag,jdbcType=CHAR},
+      remarks = #{record.remarks,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zkr.ins.account.domain.model.Dictionary">
+    <!--
+      WARNING - @mbggenerated
+      Generated on 2018-07-31 17:46:59.
+    -->
+    update dictionary
+    <set>
+      <if test="dict_name != null">
+        dict_name = #{dict_name,jdbcType=VARCHAR},
+      </if>
+      <if test="type_id != null">
+        type_id = #{type_id,jdbcType=VARCHAR},
+      </if>
+      <if test="dict_desc != null">
+        dict_desc = #{dict_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="dict_sort != null">
+        dict_sort = #{dict_sort,jdbcType=DECIMAL},
+      </if>
+      <if test="create_time != null">
+        create_time = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="create_by != null">
+        create_by = #{create_by,jdbcType=VARCHAR},
+      </if>
+      <if test="update_time != null">
+        update_time = #{update_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_by != null">
+        update_by = #{update_by,jdbcType=VARCHAR},
+      </if>
+      <if test="del_flag != null">
+        del_flag = #{del_flag,jdbcType=CHAR},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dict_id = #{dict_id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zkr.ins.account.domain.model.Dictionary">
+    <!--
+      WARNING - @mbggenerated
+      Generated on 2018-07-31 17:46:59.
+    -->
+    update dictionary
+    set dict_name = #{dict_name,jdbcType=VARCHAR},
+      type_id = #{type_id,jdbcType=VARCHAR},
+      dict_desc = #{dict_desc,jdbcType=VARCHAR},
+      dict_sort = #{dict_sort,jdbcType=DECIMAL},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+      create_by = #{create_by,jdbcType=VARCHAR},
+      update_time = #{update_time,jdbcType=TIMESTAMP},
+      update_by = #{update_by,jdbcType=VARCHAR},
+      del_flag = #{del_flag,jdbcType=CHAR},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    where dict_id = #{dict_id,jdbcType=VARCHAR}
+  </update>
+</mapper>
