@@ -8,6 +8,7 @@ import com.bootdo.common.service.FileService;
 import com.bootdo.common.utils.MD5Utils;
 import com.bootdo.common.utils.R;
 import com.bootdo.common.utils.ShiroUtils;
+import com.bootdo.common.utils.StringUtils;
 import com.bootdo.system.domain.MenuDO;
 import com.bootdo.system.service.MenuService;
 import org.apache.shiro.SecurityUtils;
@@ -45,11 +46,12 @@ public class LoginController extends BaseController {
 	}
 
 	@Log("请求访问主页")
-	@GetMapping({ "/index_zh" })
+	@GetMapping({ "/index" })
 	public String index_zh(Model model, HttpServletRequest request) {
+		String language_mark = request.getParameter("language_mark");
+		Object language = request.getSession().getAttribute
+				(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME);
 		String locale = request.getLocale().toString();
-		/*Object language = request.getSession().getAttribute
-				(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME);*/
 		List<Tree<MenuDO>> menus = new ArrayList<>();
 		if("zh_CN".equals(locale)){
 			menus = menuService.listMenuTree(getUserId());
@@ -57,6 +59,16 @@ public class LoginController extends BaseController {
 		if("en".equals(locale)){
 			menus = menuService.listMenuTree_en(getUserId());
 		}
+		if(StringUtils.isBlank(language_mark) && language != null){
+			if("zh_CN".equals(language.toString())){
+				menus = menuService.listMenuTree(getUserId());
+			}
+			if("en_US".equals(language.toString())){
+				menus = menuService.listMenuTree_en(getUserId());
+			}
+		}
+		
+		
 		model.addAttribute("menus", menus);
 		model.addAttribute("name", getUser().getName());
 		FileDO fileDO = fileService.get(getUser().getPicId());
@@ -72,25 +84,7 @@ public class LoginController extends BaseController {
 		model.addAttribute("username", getUser().getUsername());
 		return "index_v1";
 	}
-	@Log("请求访问主页")
-	@GetMapping({ "/index_en" })
-	public String index_en(Model model) {
-		List<Tree<MenuDO>> menus = menuService.listMenuTree_en(getUserId());
-		model.addAttribute("menus", menus);
-		model.addAttribute("name", getUser().getName());
-		FileDO fileDO = fileService.get(getUser().getPicId());
-		if(fileDO!=null&&fileDO.getUrl()!=null){
-			if(fileService.isExist(fileDO.getUrl())){
-				model.addAttribute("picUrl",fileDO.getUrl());
-			}else {
-				model.addAttribute("picUrl","/img/photo_s.jpg");
-			}
-		}else {
-			model.addAttribute("picUrl","/img/photo_s.jpg");
-		}
-		model.addAttribute("username", getUser().getUsername());
-		return "index_v1";
-	}
+	
 
 	@GetMapping("/login")
 	String login() {
