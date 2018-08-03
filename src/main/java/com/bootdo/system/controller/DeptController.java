@@ -14,6 +14,7 @@ import com.bootdo.common.utils.R;
 import com.bootdo.system.domain.DeptDO;
 import com.bootdo.system.service.DeptService;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,8 @@ import java.util.Map;
 @RequestMapping("/system/sysDept")
 public class DeptController extends BaseController {
 	private String prefix = "system/dept";
+	
+	
 	@Autowired
 	private DeptService sysDeptService;
 
