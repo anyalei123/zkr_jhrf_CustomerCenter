@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.advice.dao.ComplaintSuggestionDao">
+
+	<select id="get" resultType="com.bootdo.advice.domain.ComplaintSuggestionDO">
+		select `message_number`,`message_type`,`message_content`,`content_classify`,`sender_type`,`sender_name`,`sender_mobile`,`sender_email`,`sender_address`,`send_time`,`message_source`,`channel`,`message_result`,`message_desc`,`remarks` from complaint_suggestion where message_number = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.advice.domain.ComplaintSuggestionDO">
+		select `message_number`,`message_type`,`message_content`,`content_classify`,`sender_type`,`sender_name`,`sender_mobile`,`sender_email`,`sender_address`,`send_time`,`message_source`,`channel`,`message_result`,`message_desc`,`remarks` from complaint_suggestion
+        <where>  
+		  		  <if test="messageNumber != null and messageNumber != ''"> and message_number = #{messageNumber} </if>
+		  		  <if test="messageType != null and messageType != ''"> and message_type = #{messageType} </if>
+		  		  <if test="messageContent != null and messageContent != ''"> and message_content = #{messageContent} </if>
+		  		  <if test="contentClassify != null and contentClassify != ''"> and content_classify = #{contentClassify} </if>
+		  		  <if test="senderType != null and senderType != ''"> and sender_type = #{senderType} </if>
+		  		  <if test="senderName != null and senderName != ''"> and sender_name = #{senderName} </if>
+		  		  <if test="senderMobile != null and senderMobile != ''"> and sender_mobile = #{senderMobile} </if>
+		  		  <if test="senderEmail != null and senderEmail != ''"> and sender_email = #{senderEmail} </if>
+		  		  <if test="senderAddress != null and senderAddress != ''"> and sender_address = #{senderAddress} </if>
+		  		  <if test="sendTime != null and sendTime != ''"> and send_time = #{sendTime} </if>
+		  		  <if test="messageSource != null and messageSource != ''"> and message_source = #{messageSource} </if>
+		  		  <if test="channel != null and channel != ''"> and channel = #{channel} </if>
+		  		  <if test="messageResult != null and messageResult != ''"> and message_result = #{messageResult} </if>
+		  		  <if test="messageDesc != null and messageDesc != ''"> and message_desc = #{messageDesc} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by message_number desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from complaint_suggestion
+		 <where>  
+		  		  <if test="messageNumber != null and messageNumber != ''"> and message_number = #{messageNumber} </if>
+		  		  <if test="messageType != null and messageType != ''"> and message_type = #{messageType} </if>
+		  		  <if test="messageContent != null and messageContent != ''"> and message_content = #{messageContent} </if>
+		  		  <if test="contentClassify != null and contentClassify != ''"> and content_classify = #{contentClassify} </if>
+		  		  <if test="senderType != null and senderType != ''"> and sender_type = #{senderType} </if>
+		  		  <if test="senderName != null and senderName != ''"> and sender_name = #{senderName} </if>
+		  		  <if test="senderMobile != null and senderMobile != ''"> and sender_mobile = #{senderMobile} </if>
+		  		  <if test="senderEmail != null and senderEmail != ''"> and sender_email = #{senderEmail} </if>
+		  		  <if test="senderAddress != null and senderAddress != ''"> and sender_address = #{senderAddress} </if>
+		  		  <if test="sendTime != null and sendTime != ''"> and send_time = #{sendTime} </if>
+		  		  <if test="messageSource != null and messageSource != ''"> and message_source = #{messageSource} </if>
+		  		  <if test="channel != null and channel != ''"> and channel = #{channel} </if>
+		  		  <if test="messageResult != null and messageResult != ''"> and message_result = #{messageResult} </if>
+		  		  <if test="messageDesc != null and messageDesc != ''"> and message_desc = #{messageDesc} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.advice.domain.ComplaintSuggestionDO">
+		insert into complaint_suggestion
+		(
+			`message_number`, 
+			`message_type`, 
+			`message_content`, 
+			`content_classify`, 
+			`sender_type`, 
+			`sender_name`, 
+			`sender_mobile`, 
+			`sender_email`, 
+			`sender_address`, 
+			`send_time`, 
+			`message_source`, 
+			`channel`, 
+			`message_result`, 
+			`message_desc`, 
+			`remarks`
+		)
+		values
+		(
+			#{messageNumber}, 
+			#{messageType}, 
+			#{messageContent}, 
+			#{contentClassify}, 
+			#{senderType}, 
+			#{senderName}, 
+			#{senderMobile}, 
+			#{senderEmail}, 
+			#{senderAddress}, 
+			#{sendTime}, 
+			#{messageSource}, 
+			#{channel}, 
+			#{messageResult}, 
+			#{messageDesc}, 
+			#{remarks}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.advice.domain.ComplaintSuggestionDO">
+		update complaint_suggestion 
+		<set>
+			<if test="messageType != null">`message_type` = #{messageType}, </if>
+			<if test="messageContent != null">`message_content` = #{messageContent}, </if>
+			<if test="contentClassify != null">`content_classify` = #{contentClassify}, </if>
+			<if test="senderType != null">`sender_type` = #{senderType}, </if>
+			<if test="senderName != null">`sender_name` = #{senderName}, </if>
+			<if test="senderMobile != null">`sender_mobile` = #{senderMobile}, </if>
+			<if test="senderEmail != null">`sender_email` = #{senderEmail}, </if>
+			<if test="senderAddress != null">`sender_address` = #{senderAddress}, </if>
+			<if test="sendTime != null">`send_time` = #{sendTime}, </if>
+			<if test="messageSource != null">`message_source` = #{messageSource}, </if>
+			<if test="channel != null">`channel` = #{channel}, </if>
+			<if test="messageResult != null">`message_result` = #{messageResult}, </if>
+			<if test="messageDesc != null">`message_desc` = #{messageDesc}, </if>
+			<if test="remarks != null">`remarks` = #{remarks}</if>
+		</set>
+		where message_number = #{messageNumber}
+	</update>
+	
+	<delete id="remove">
+		delete from complaint_suggestion where message_number = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from complaint_suggestion where message_number in 
+		<foreach item="messageNumber" collection="array" open="(" separator="," close=")">
+			#{messageNumber}
+		</foreach>
+	</delete>
+
+</mapper>
