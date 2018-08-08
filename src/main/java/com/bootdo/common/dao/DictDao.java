@@ -1,11 +1,11 @@
 package com.bootdo.common.dao;
 
+import com.bootdo.common.domain.DictDO;
+
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
-
-import com.bootdo.common.domain.DictDO;
 
 /**
  * 字典表
@@ -21,6 +21,8 @@ public interface DictDao {
 
 	List<DictDO> list(Map<String, Object> map);
 
+	List<DictDO> list_en(Map<String, Object> map);
+
 	int count(Map<String, Object> map);
 
 	int save(DictDO dict);
@@ -32,7 +34,6 @@ public interface DictDao {
 	int batchRemove(Long[] ids);
 
 	List<DictDO> listType();
+
 	List<DictDO> listType_en();
-	
-	
 }
