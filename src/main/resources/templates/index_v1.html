@@ -7,9 +7,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>客户中心后台管理系统</title>
-    <meta name="keywords" content="客户中心后台管理系统">
-    <meta name="description" content="客户中心后台管理系统">
+    <title>客户中心管理系统</title>
+    <meta name="keywords" content="客户中心管理系统">
+    <meta name="description" content="客户中心管理系统">
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html"/>
     <![endif]-->
@@ -59,7 +59,7 @@
                             <li><a href="/logout">安全退出</a>
                             </li>
                         </ul>
-                        <div class="logo-element">Customer Center</div>
+                        <div class="logo-element">BootDo</div>
                     </div>
                 </li>
                 <!--<li><a href="#"> <i class="fa fa-home"></i> <span
@@ -97,18 +97,18 @@
                     <form role="search" class="navbar-form-custom"
                           method="post" action="">
                         <div class="form-group">
-                            <input type="text" th:placeholder="..."
+                            <input type="text" th:placeholder="#{keywords}"
                                    class="form-control" name="top-search" id="top-search">
                         </div>
                     </form>
                 </div>
                 <!--th:href="@{/language/change(language_mark='oooo')}"-->
                 <ul class="nav navbar-top-links navbar-right">
-                    <li class="hidden-xs"><a  th:href="@{/index(language_mark='en')}"
+                    <li class="hidden-xs"><a  th:href="@{/index(language_mark='en_US')}"
                                              class=""><i class="fa fa-rss-square"></i>English</a></li>
-                    <li class="hidden-xs"><a  th:href="@{/index(language_mark='zh')}"
+                    <li class="hidden-xs"><a  th:href="@{/index(language_mark='zh_CN')}"
                                              class=""><i class="fa fa-rss-square"></i>简体中文</a></li>
-                    <li class="dropdown"><a  class="dropdown-toggle count-info"
+                    <!--<li class="dropdown"><a  class="dropdown-toggle count-info"
                                             data-toggle="dropdown"> <i class="fa fa-envelope"></i>
                         <span class="label label-warning">{{total}}</span>notification
                     </a>
@@ -135,7 +135,7 @@
                                 </div>
                             </li>
                         </ul>
-                    </li>
+                    </li>-->
                     <li class="hidden-xs"><a @click="personal" href="#" th:utext="#{personal}" ><i class="fa fa-id-card"></i> </a></li>
                     <li class="dropdown hidden-xs"><a th:utext="#{themes}"
                             class="right-sidebar-toggle" aria-expanded="false"> <i
