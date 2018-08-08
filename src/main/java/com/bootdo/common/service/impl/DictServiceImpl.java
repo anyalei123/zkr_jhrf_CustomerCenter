@@ -27,7 +27,12 @@ public class DictServiceImpl implements DictService {
 
     @Override
     public List<DictDO> list(Map<String, Object> map) {
+
         return dictDao.list(map);
+    }
+
+    public List<DictDO> list_en(Map<String, Object> map) {
+        return dictDao.list_en(map);
     }
 
     @Override
