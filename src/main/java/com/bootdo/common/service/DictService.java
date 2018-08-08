@@ -18,7 +18,9 @@ public interface DictService {
 	DictDO get(Long id);
 	
 	List<DictDO> list(Map<String, Object> map);
-	
+
+	List<DictDO> list_en(Map<String, Object> map);
+
 	int count(Map<String, Object> map);
 	
 	int save(DictDO dict);
