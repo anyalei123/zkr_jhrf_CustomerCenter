@@ -17,31 +17,38 @@ public class LocaleInterceptor implements HandlerInterceptor{
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
-        LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+        String locale = request.getLocale().toString();
         String language_mark = request.getParameter("language_mark");
-        Object session_mark =  request.getSession().getAttribute
+        Object language = request.getSession().getAttribute
                 (SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME);
-        String session_language_mark = "";
-        if(StringUtils.isNotBlank(language_mark) && "en".equals(language_mark)){
-            request.getSession().setAttribute
-                    (SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME,Locale.US);
-        }
-        if(StringUtils.isNotBlank(language_mark) && "zh".equals(language_mark)){
-            request.getSession().setAttribute
-                    (SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME, Locale.CHINA);
-        }
-        if(StringUtils.isBlank(language_mark) && StringUtils.isBlank(language_mark) && session_mark != null){
-            //String[] lan = session_mark.toString().split("_");
-            //Locale locale = new Locale(lan[0], lan[1]);
-            if("en_US".equals(session_mark.toString())){
-                request.getSession().setAttribute
-                        (SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME, Locale.US);
-            }
-            if("zh_CN".equals(session_mark)){
-                request.getSession().setAttribute
-                        (SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME, Locale.CHINA);
-            }
 
+        //mark not empty
+        if(StringUtils.isNotBlank(language_mark)){
+            if("zh_CN".equals(language_mark)){
+                request.getSession().setAttribute
+                        (SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME,Locale.CHINA);
+            }
+            if("en_US".equals(language_mark)){
+                request.getSession().setAttribute
+                        (SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME,Locale.US);
+            }
+        }else{//mark empty
+            if(language != null && "zh_CN".equals(language.toString())){//session not empty
+                request.getSession().setAttribute
+                        (SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME,Locale.CHINA);
+            }
+            if(language != null && "en_US".equals(language.toString())){//session not empty
+                request.getSession().setAttribute
+                        (SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME,Locale.US);
+            }
+            if(language == null && locale.contains("zh")){//session not empty
+                request.getSession().setAttribute
+                        (SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME,Locale.CHINA);
+            }
+            if(language == null && "en".equals(locale)){//session not empty
+                request.getSession().setAttribute
+                        (SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME,Locale.US);
+            }
         }
 
 
