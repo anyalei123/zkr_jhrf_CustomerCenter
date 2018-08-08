@@ -2,11 +2,13 @@ package com.bootdo.common.controller;
 
 import com.bootdo.common.config.Constant;
 import com.bootdo.common.domain.DictDO;
+import com.bootdo.common.domain.Tree;
 import com.bootdo.common.service.DictService;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
 import com.bootdo.common.utils.StringUtils;
+import com.bootdo.system.domain.MenuDO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,10 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 字典表
@@ -42,10 +41,20 @@ public class DictController extends BaseController {
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("common:dict:dict")
-	public PageUtils list(@RequestParam Map<String, Object> params) {
+	public PageUtils list(@RequestParam Map<String, Object> params, HttpServletRequest request) {
+
+		Object language = request.getSession().getAttribute
+				(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME);
 		// 查询列表数据
 		Query query = new Query(params);
-		List<DictDO> dictList = dictService.list(query);
+		List<DictDO> dictList = new ArrayList<>();
+		//choose method according to language in session locale resolver.
+		if("zh_CN".equals(language.toString())){
+			dictList = dictService.list(query);
+		}
+		if("en_US".equals(language.toString())){
+			dictList = dictService.list_en(query);
+		}
 		int total = dictService.count(query);
 		PageUtils pageUtils = new PageUtils(dictList, total);
 		return pageUtils;
@@ -125,36 +134,20 @@ public class DictController extends BaseController {
 		return R.ok();
 	}
 
-	/**
-	 * 新增国际化方法
-	 * @param
-	 * @return
-	 * @author ayl
-	 * @create 2018-07-30 12:36:46
-	 */
 	@GetMapping("/type")
 	@ResponseBody
 	public List<DictDO> listType(HttpServletRequest request) {
-		String language_mark = request.getParameter("language_mark");
+		List<DictDO> dictList = new ArrayList<>();
+		List<Tree<MenuDO>> menus = new ArrayList<>();
 		Object language = request.getSession().getAttribute
 				(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME);
-		String locale = request.getLocale().toString();
-		List<DictDO> dictList = new ArrayList<>();
-		if("zh_CN".equals(locale)){
+		//choose method according to language in session locale resolver.
+		if("zh_CN".equals(language.toString())){
 			dictList = dictService.listType();
 		}
-		if("en".equals(locale)){
+		if("en_US".equals(language.toString())){
 			dictList = dictService.listType_en();
 		}
-		if(StringUtils.isBlank(language_mark) && language != null){
-			if("zh_CN".equals(language.toString())){
-				dictList = dictService.listType();
-			}
-			if("en_US".equals(language.toString())){
-				dictList = dictService.listType_en();
-			}
-		}
-
 		return dictList;
 	};
 
