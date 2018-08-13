@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<div class="columns pull-left">
+							<button shiro:hasPermission="template:template:add" type="button" class="btn  btn-primary" onclick="add()">
+								<i class="fa fa-plus" aria-hidden="true"></i>添加
+							</button>
+							<button shiro:hasPermission="template:template:batchRemove" type="button" class="btn  btn-danger"
+								onclick="batchRemove()">
+								<i class="fa fa-trash" aria-hidden="true"></i>删除
+							</button>
+						</div>
+						<div class="columns pull-right">
+							<button class="btn btn-success" onclick="reLoad()">查询</button>
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							语言：<select id="templateLanguage" class="form-control"
+										 placeholder="模板语言">
+							<option value="">--选择模板语言--</option>
+							<option value="简体中文">简体中文</option>
+							<option value="繁体中文">繁体中文</option>
+							<option value="English">English</option>
+						</select>
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							类型：<select id="typeId" class="form-control"
+										 placeholder="模板类型">
+							<option value="">--选择模板类型--</option>
+						</select>
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							名称：<input id="templateName" type="text" class="form-control"
+								   placeholder="模板名称">
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							模板编号：<input id="templateId" type="text" class="form-control"
+								   placeholder="模板编号">
+						</div>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true">
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+		<div>
+			<script type="text/javascript">
+				var s_edit_h = 'hidden';
+				var s_remove_h = 'hidden';
+				// var s_resetPwd_h = 'hidden';
+			</script>
+		</div>
+		<div shiro:hasPermission="template:template:edit">
+			<script type="text/javascript">
+				s_edit_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="template:template:remove">
+			<script type="text/javascript">
+				var s_remove_h = '';
+			</script>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript" src="/js/appjs/template/template/template.js"></script>
+</body>
+</html>
