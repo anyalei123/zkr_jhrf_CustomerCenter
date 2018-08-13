@@ -43,18 +43,18 @@ public class DictController extends BaseController {
 	@RequiresPermissions("common:dict:dict")
 	public PageUtils list(@RequestParam Map<String, Object> params, HttpServletRequest request) {
 
-		Object language = request.getSession().getAttribute
-				(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME);
+//		Object language = request.getSession().getAttribute
+//				(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME);
 		// 查询列表数据
 		Query query = new Query(params);
 		List<DictDO> dictList = new ArrayList<>();
 		//choose method according to language in session locale resolver.
-		if("zh_CN".equals(language.toString())){
+//		if("zh_CN".equals(language.toString())){
 			dictList = dictService.list(query);
-		}
-		if("en_US".equals(language.toString())){
-			dictList = dictService.list_en(query);
-		}
+//		}
+//		if("en_US".equals(language.toString())){
+//			dictList = dictService.list_en(query);
+//		}
 		int total = dictService.count(query);
 		PageUtils pageUtils = new PageUtils(dictList, total);
 		return pageUtils;
@@ -139,15 +139,15 @@ public class DictController extends BaseController {
 	public List<DictDO> listType(HttpServletRequest request) {
 		List<DictDO> dictList = new ArrayList<>();
 		List<Tree<MenuDO>> menus = new ArrayList<>();
-		Object language = request.getSession().getAttribute
-				(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME);
+//		Object language = request.getSession().getAttribute
+//				(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME);
 		//choose method according to language in session locale resolver.
-		if("zh_CN".equals(language.toString())){
+//		if("zh_CN".equals(language.toString())){
 			dictList = dictService.listType();
-		}
-		if("en_US".equals(language.toString())){
-			dictList = dictService.listType_en();
-		}
+//		}
+//		if("en_US".equals(language.toString())){
+//			dictList = dictService.listType_en();
+//		}
 		return dictList;
 	};
 
