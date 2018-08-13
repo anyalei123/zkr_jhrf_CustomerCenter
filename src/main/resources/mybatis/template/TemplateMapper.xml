@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.template.dao.TemplateDao">
+
+	<!--根据id查询模板-->
+	<select id="get" resultType="com.bootdo.template.domain.TemplateDO">
+		select `template_id`,`template_name`,`template_language`,`template_content`,`template_version`,`effect_time`,`remarks`,`type_id`,`create_by`,`create_time`,`update_by`,`update_time` from mb_template where template_id = #{value}
+	</select>
+
+	<!--查询模板列表数据以及分页信息-->
+	<select id="list" resultType="com.bootdo.template.domain.TemplateDO">
+		select `template_id`,`template_name`,`template_language`,`template_content`,`template_version`,`effect_time`,`remarks`,`type_id`,`create_by`,`create_time`,`update_by`,`update_time` from mb_template
+        <where>  
+		  		  <if test="templateId != null and templateId != ''"> and template_id = #{templateId} </if>
+		  		  <if test="templateName != null and templateName != ''"> and template_name like concat('%',#{templateName},'%') </if>
+		  		  <if test="templateLanguage != null and templateLanguage != ''"> and template_language = #{templateLanguage} </if>
+		  		  <if test="templateContent != null and templateContent != ''"> and template_content = #{templateContent} </if>
+		  		  <if test="templateVersion != null and templateVersion != ''"> and template_version = #{templateVersion} </if>
+				  <if test="effectTime != null and effectTime != ''"> and effect_time = #{effectTime} </if>
+				  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+				  <if test="typeId != null and typeId != ''"> and type_id = #{typeId} </if>
+		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+			      <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+			      <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by template_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<!--查询模板列表数据总条数-->
+ 	<select id="count" resultType="int">
+		select count(*) from mb_template
+		 <where>
+			 <if test="templateId != null and templateId != ''"> and template_id = #{templateId} </if>
+			 <if test="templateName != null and templateName != ''"> and template_name like concat('%',#{templateName},'%') </if>
+			 <if test="templateLanguage != null and templateLanguage != ''"> and template_language = #{templateLanguage} </if>
+			 <if test="templateContent != null and templateContent != ''"> and template_content = #{templateContent} </if>
+			 <if test="templateVersion != null and templateVersion != ''"> and template_version = #{templateVersion} </if>
+			 <if test="effectTime != null and effectTime != ''"> and effect_time = #{effectTime} </if>
+			 <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+			 <if test="typeId != null and typeId != ''"> and type_id = #{typeId} </if>
+			 <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+			 <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+			 <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+			 <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		 </where>
+	</select>
+
+	<!--保存模板-->
+	<insert id="save" parameterType="com.bootdo.template.domain.TemplateDO">
+		insert into mb_template
+		(
+			`template_id`,
+			`template_name`, 
+			`template_language`, 
+			`template_content`, 
+			`template_version`,
+			`effect_time`,
+			`remarks`,
+			`type_id`,
+			`create_by`,
+			`create_time`,
+			`update_by`,
+			`update_time`
+		)
+		values
+		(
+			#{templateId},
+			#{templateName}, 
+			#{templateLanguage}, 
+			#{templateContent}, 
+			#{templateVersion},
+			#{effectTime},
+			#{remarks},
+			#{typeId},
+			#{createBy},
+			#{createTime},
+			#{updateBy},
+			#{updateTime}
+		)
+	</insert>
+
+	<!--修改模板-->
+	<update id="update" parameterType="com.bootdo.template.domain.TemplateDO">
+		update mb_template
+		<set>
+			<if test="templateName != null">`template_name` = #{templateName}, </if>
+			<if test="templateLanguage != null">`template_language` = #{templateLanguage}, </if>
+			<if test="templateContent != null">`template_content` = #{templateContent}, </if>
+			<if test="templateVersion != null">`template_version` = #{templateVersion}, </if>
+			<if test="effectTime != null">`effect_time` = #{effectTime}, </if>
+			<if test="remarks != null">`remarks` = #{remarks},</if>
+			<if test="typeId != null">`type_id` = #{typeId}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+		</set>
+		where template_id = #{templateId}
+	</update>
+
+	<!--根据id删除模板-->
+	<delete id="remove">
+		delete from mb_template where template_id = #{value}
+	</delete>
+
+	<!--批量删除模板-->
+	<delete id="batchRemove">
+		delete from mb_template where template_id in
+		<foreach item="templateId" collection="array" open="(" separator="," close=")">
+			#{templateId}
+		</foreach>
+	</delete>
+
+</mapper>

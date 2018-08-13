@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.template.dao.PlaceholderDao">
+
+	<!--根据id查询占位符-->
+	<select id="get" resultType="com.bootdo.template.domain.PlaceholderDO">
+		select `placeholder_id`,`placeholder_code`,`placeholder_name`,`placeholder_type`,`placeholder_desc`,`create_time`,`create_by`,`update_time`,`update_by` from mb_placeholder where placeholder_id = #{value}
+	</select>
+
+	<!--查询占位符列表数据以及分页信息-->
+	<select id="list" resultType="com.bootdo.template.domain.PlaceholderDO">
+		select `placeholder_id`,`placeholder_code`,`placeholder_name`,`placeholder_type`,`placeholder_desc`,`create_time`,`create_by`,`update_time`,`update_by` from mb_placeholder
+        <where>  
+		  		  <if test="placeholderId != null and placeholderId != ''"> and placeholder_id = #{placeholderId} </if>
+		  		  <if test="placeholderCode != null and placeholderCode != ''"> and placeholder_code = #{placeholderCode} </if>
+		  		  <if test="placeholderName != null and placeholderName != ''"> and placeholder_name like concat('%',#{placeholderName},'%') </if>
+		  		  <if test="placeholderType != null and placeholderType != ''"> and placeholder_type = #{placeholderType} </if>
+		  		  <if test="placeholderDesc != null and placeholderDesc != ''"> and placeholder_desc = #{placeholderDesc} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by placeholder_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<!--查询占位符列表数据总条数-->
+ 	<select id="count" resultType="int">
+		select count(*) from mb_placeholder
+		 <where>  
+		  		  <if test="placeholderId != null and placeholderId != ''"> and placeholder_id = #{placeholderId} </if>
+		  		  <if test="placeholderCode != null and placeholderCode != ''"> and placeholder_code = #{placeholderCode} </if>
+		  		  <if test="placeholderName != null and placeholderName != ''"> and placeholder_name like concat('%',#{placeholderName},'%') </if>
+		  		  <if test="placeholderType != null and placeholderType != ''"> and placeholder_type = #{placeholderType} </if>
+		  		  <if test="placeholderDesc != null and placeholderDesc != ''"> and placeholder_desc = #{placeholderDesc} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+		 </where>
+	</select>
+
+	<!--保存占位符-->
+	<insert id="save" parameterType="com.bootdo.template.domain.PlaceholderDO">
+		insert into mb_placeholder
+		(
+			`placeholder_id`, 
+			`placeholder_code`, 
+			`placeholder_name`, 
+			`placeholder_type`, 
+			`placeholder_desc`, 
+			`create_time`, 
+			`create_by`, 
+			`update_time`, 
+			`update_by`
+		)
+		values
+		(
+			#{placeholderId}, 
+			#{placeholderCode}, 
+			#{placeholderName}, 
+			#{placeholderType}, 
+			#{placeholderDesc}, 
+			#{createTime}, 
+			#{createBy}, 
+			#{updateTime}, 
+			#{updateBy}
+		)
+	</insert>
+
+	<!--修改占位符-->
+	<update id="update" parameterType="com.bootdo.template.domain.PlaceholderDO">
+		update mb_placeholder
+		<set>
+			<if test="placeholderCode != null">`placeholder_code` = #{placeholderCode}, </if>
+			<if test="placeholderName != null">`placeholder_name` = #{placeholderName}, </if>
+			<if test="placeholderType != null">`placeholder_type` = #{placeholderType}, </if>
+			<if test="placeholderDesc != null">`placeholder_desc` = #{placeholderDesc}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}</if>
+		</set>
+		where placeholder_id = #{placeholderId}
+	</update>
+
+	<!--根据id删除占位符-->
+	<delete id="remove">
+		delete from mb_placeholder where placeholder_id = #{value}
+	</delete>
+
+	<!--批量删除占位符-->
+	<delete id="batchRemove">
+		delete from mb_placeholder where placeholder_id in
+		<foreach item="placeholderId" collection="array" open="(" separator="," close=")">
+			#{placeholderId}
+		</foreach>
+	</delete>
+
+</mapper>
