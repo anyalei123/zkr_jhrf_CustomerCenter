@@ -37,23 +37,25 @@ public class LocaleConfig extends WebMvcConfigurerAdapter {
         lci.setParamName("lang");
         return lci;
     }
-    @Bean
+    
+    //去掉国际化拦截器代码
+  /*  @Bean
     public LocaleInterceptor localeInterceptor(){
         return new LocaleInterceptor();
     }
-
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(localeChangeInterceptor());
-        registry.addInterceptor(new LocaleInterceptor()).addPathPatterns("/**")
-                .excludePathPatterns("/**/fonts/*").excludePathPatterns("/**/*.css")
-                .excludePathPatterns("/**/*.js").excludePathPatterns("/**/*.jpg")
-                .excludePathPatterns("/**/*.png").excludePathPatterns("/**/*.gif*")
-                .excludePathPatterns("/**/*.jpeg").excludePathPatterns("/login")
-                .excludePathPatterns("/common/dict/type")
-                .excludePathPatterns("/common/dict").excludePathPatterns("/oa/notify/message");
-
-    }
+*/
+  //去掉国际化拦截器代码
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(localeChangeInterceptor());
+//        registry.addInterceptor(new LocaleInterceptor()).addPathPatterns("/**")
+//                .excludePathPatterns("/**/fonts/*").excludePathPatterns("/**/*.css")
+//                .excludePathPatterns("/**/*.js").excludePathPatterns("/**/*.jpg")
+//                .excludePathPatterns("/**/*.png").excludePathPatterns("/**/*.gif*")
+//                .excludePathPatterns("/**/*.jpeg").excludePathPatterns("/login")
+//                .excludePathPatterns("/common/dict/type")
+//                .excludePathPatterns("/common/dict").excludePathPatterns("/oa/notify/message");
+//
+//    }
 
 }
