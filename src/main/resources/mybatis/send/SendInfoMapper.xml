@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.send.dao.SendInfoDao">
+
+    <!--根据id查询寄送信息-->
+    <select id="get" resultType="com.bootdo.send.domain.SendInfoDO">
+		select `send_id`,`policy_no`,`send_orderno`,`file_type`,`insurance_company`,`courier_company`,`sender_type`,`sender_name`,`sender_mobile`,`sender_address`,`send_time`,`recipient_name`,`recipient_mobile`,`recipient_address`,`receipt_time`,`send_content`,`send_desc`,`send_attach`,`send_state`,`calm_period_start`,`calm_period_end`,`create_time`,`create_by_id`,`create_by`,`update_time`,`update_by_id`,`update_by` from js_send_info where send_id = #{value}
+	</select>
+
+    <!--查询寄送信息列表和分页信息-->
+    <select id="list" resultType="com.bootdo.send.domain.SendInfoDO">
+        select
+        `send_id`,`policy_no`,`send_orderno`,`file_type`,`insurance_company`,`courier_company`,`sender_type`,`sender_name`,`sender_mobile`,`sender_address`,`send_time`,`recipient_name`,`recipient_mobile`,`recipient_address`,`receipt_time`,`send_content`,`send_desc`,`send_attach`,`send_state`,`calm_period_start`,`calm_period_end`,`create_time`,`create_by_id`,`create_by`,`update_time`,`update_by_id`,`update_by`
+        from js_send_info
+        <where>
+            <if test="sendId != null and sendId != ''">and send_id = #{sendId}</if>
+            <if test="policyNo != null and policyNo != ''">and policy_no = #{policyNo}</if>
+            <if test="sendOrderno != null and sendOrderno != ''">and send_orderno = #{sendOrderno}</if>
+            <if test="fileType != null and fileType != ''">and file_type = #{fileType}</if>
+            <if test="insuranceCompany != null and insuranceCompany != ''">and insurance_company = #{insuranceCompany}
+            </if>
+            <if test="courierCompany != null and courierCompany != ''">and courier_company = #{courierCompany}</if>
+            <if test="senderType != null and senderType != ''">and sender_type = #{senderType}</if>
+            <if test="senderName != null and senderName != ''">and sender_name = #{senderName}</if>
+            <if test="senderMobile != null and senderMobile != ''">and sender_mobile = #{senderMobile}</if>
+            <if test="senderAddress != null and senderAddress != ''">and sender_address = #{senderAddress}</if>
+            <if test="sendTime != null and sendTime != ''">and send_time = #{sendTime}</if>
+            <if test="recipientName != null and recipientName != ''">and recipient_name = #{recipientName}</if>
+            <if test="recipientMobile != null and recipientMobile != ''">and recipient_mobile = #{recipientMobile}</if>
+            <if test="recipientAddress != null and recipientAddress != ''">and recipient_address = #{recipientAddress}
+            </if>
+            <if test="receiptTime != null and receiptTime != ''">and receipt_time = #{receiptTime}</if>
+            <if test="sendContent != null and sendContent != ''">and send_content = #{sendContent}</if>
+            <if test="sendDesc != null and sendDesc != ''">and send_desc = #{sendDesc}</if>
+            <if test="sendAttach != null and sendAttach != ''">and send_attach = #{sendAttach}</if>
+            <if test="sendState != null and sendState != ''">and send_state = #{sendState}</if>
+            <if test="calmPeriodStart != null and calmPeriodStart != ''">and calm_period_start = #{calmPeriodStart}</if>
+            <if test="calmPeriodEnd != null and calmPeriodEnd != ''">and calm_period_end = #{calmPeriodEnd}</if>
+            <if test="createTime != null and createTime != ''">and create_time = #{createTime}</if>
+            <if test="createById != null and createById != ''">and create_by_id = #{createById}</if>
+            <if test="createBy != null and createBy != ''">and create_by = #{createBy}</if>
+            <if test="updateTime != null and updateTime != ''">and update_time = #{updateTime}</if>
+            <if test="updateById != null and updateById != ''">and update_by_id = #{updateById}</if>
+            <if test="updateBy != null and updateBy != ''">and update_by = #{updateBy}</if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by send_id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <!--查询寄送信息列表数据总条数-->
+    <select id="count" resultType="int">
+        select count(*) from js_send_info
+        <where>
+            <if test="sendId != null and sendId != ''">and send_id = #{sendId}</if>
+            <if test="policyNo != null and policyNo != ''">and policy_no = #{policyNo}</if>
+            <if test="sendOrderno != null and sendOrderno != ''">and send_orderno = #{sendOrderno}</if>
+            <if test="fileType != null and fileType != ''">and file_type = #{fileType}</if>
+            <if test="insuranceCompany != null and insuranceCompany != ''">and insurance_company = #{insuranceCompany}
+            </if>
+            <if test="courierCompany != null and courierCompany != ''">and courier_company = #{courierCompany}</if>
+            <if test="senderType != null and senderType != ''">and sender_type = #{senderType}</if>
+            <if test="senderName != null and senderName != ''">and sender_name = #{senderName}</if>
+            <if test="senderMobile != null and senderMobile != ''">and sender_mobile = #{senderMobile}</if>
+            <if test="senderAddress != null and senderAddress != ''">and sender_address = #{senderAddress}</if>
+            <if test="sendTime != null and sendTime != ''">and send_time = #{sendTime}</if>
+            <if test="recipientName != null and recipientName != ''">and recipient_name = #{recipientName}</if>
+            <if test="recipientMobile != null and recipientMobile != ''">and recipient_mobile = #{recipientMobile}</if>
+            <if test="recipientAddress != null and recipientAddress != ''">and recipient_address = #{recipientAddress}
+            </if>
+            <if test="receiptTime != null and receiptTime != ''">and receipt_time = #{receiptTime}</if>
+            <if test="sendContent != null and sendContent != ''">and send_content = #{sendContent}</if>
+            <if test="sendDesc != null and sendDesc != ''">and send_desc = #{sendDesc}</if>
+            <if test="sendAttach != null and sendAttach != ''">and send_attach = #{sendAttach}</if>
+            <if test="sendState != null and sendState != ''">and send_state = #{sendState}</if>
+            <if test="calmPeriodStart != null and calmPeriodStart != ''">and calm_period_start = #{calmPeriodStart}</if>
+            <if test="calmPeriodEnd != null and calmPeriodEnd != ''">and calm_period_end = #{calmPeriodEnd}</if>
+            <if test="createTime != null and createTime != ''">and create_time = #{createTime}</if>
+            <if test="createById != null and createById != ''">and create_by_id = #{createById}</if>
+            <if test="createBy != null and createBy != ''">and create_by = #{createBy}</if>
+            <if test="updateTime != null and updateTime != ''">and update_time = #{updateTime}</if>
+            <if test="updateById != null and updateById != ''">and update_by_id = #{updateById}</if>
+            <if test="updateBy != null and updateBy != ''">and update_by = #{updateBy}</if>
+        </where>
+    </select>
+
+    <!--保存寄送信息-->
+    <insert id="save" parameterType="com.bootdo.send.domain.SendInfoDO">
+		insert into js_send_info
+		(
+			`send_id`, 
+			`policy_no`, 
+			`send_orderno`, 
+			`file_type`, 
+			`insurance_company`, 
+			`courier_company`, 
+			`sender_type`, 
+			`sender_name`, 
+			`sender_mobile`, 
+			`sender_address`, 
+			`send_time`, 
+			`recipient_name`, 
+			`recipient_mobile`, 
+			`recipient_address`, 
+			`receipt_time`, 
+			`send_content`, 
+			`send_desc`, 
+			`send_attach`, 
+			`send_state`, 
+			`calm_period_start`, 
+			`calm_period_end`, 
+			`create_time`, 
+			`create_by_id`,
+			`create_by`,
+			`update_time`, 
+			`update_by_id`,
+			`update_by`
+		)
+		values
+		(
+			#{sendId}, 
+			#{policyNo}, 
+			#{sendOrderno}, 
+			#{fileType}, 
+			#{insuranceCompany}, 
+			#{courierCompany}, 
+			#{senderType}, 
+			#{senderName}, 
+			#{senderMobile}, 
+			#{senderAddress}, 
+			#{sendTime}, 
+			#{recipientName}, 
+			#{recipientMobile}, 
+			#{recipientAddress}, 
+			#{receiptTime}, 
+			#{sendContent}, 
+			#{sendDesc}, 
+			#{sendAttach}, 
+			#{sendState}, 
+			#{calmPeriodStart}, 
+			#{calmPeriodEnd}, 
+			#{createTime}, 
+			#{createById},
+			#{createBy},
+			#{updateTime}, 
+			#{updateById},
+			#{updateBy}
+		)
+	</insert>
+
+    <!--修改寄送信息-->
+    <update id="update" parameterType="com.bootdo.send.domain.SendInfoDO">
+        update js_send_info
+        <set>
+            <if test="policyNo != null">`policy_no` = #{policyNo},</if>
+            <if test="sendOrderno != null">`send_orderno` = #{sendOrderno},</if>
+            <if test="fileType != null">`file_type` = #{fileType},</if>
+            <if test="insuranceCompany != null">`insurance_company` = #{insuranceCompany},</if>
+            <if test="courierCompany != null">`courier_company` = #{courierCompany},</if>
+            <if test="senderType != null">`sender_type` = #{senderType},</if>
+            <if test="senderName != null">`sender_name` = #{senderName},</if>
+            <if test="senderMobile != null">`sender_mobile` = #{senderMobile},</if>
+            <if test="senderAddress != null">`sender_address` = #{senderAddress},</if>
+            <if test="sendTime != null">`send_time` = #{sendTime},</if>
+            <if test="recipientName != null">`recipient_name` = #{recipientName},</if>
+            <if test="recipientMobile != null">`recipient_mobile` = #{recipientMobile},</if>
+            <if test="recipientAddress != null">`recipient_address` = #{recipientAddress},</if>
+            <if test="receiptTime != null">`receipt_time` = #{receiptTime},</if>
+            <if test="sendContent != null">`send_content` = #{sendContent},</if>
+            <if test="sendDesc != null">`send_desc` = #{sendDesc},</if>
+            <if test="sendAttach != null">`send_attach` = #{sendAttach},</if>
+            <if test="sendState != null">`send_state` = #{sendState},</if>
+            <if test="calmPeriodStart != null">`calm_period_start` = #{calmPeriodStart},</if>
+            <if test="calmPeriodEnd != null">`calm_period_end` = #{calmPeriodEnd},</if>
+            <if test="createTime != null">`create_time` = #{createTime},</if>
+            <if test="createById != null">`create_by_id` = #{createById},</if>
+            <if test="createBy != null">`create_by` = #{createBy},</if>
+            <if test="updateTime != null">`update_time` = #{updateTime},</if>
+            <if test="updateById != null">`update_by_id` = #{updateById},</if>
+            <if test="updateBy != null">`update_by` = #{updateBy}</if>
+        </set>
+        where send_id = #{sendId}
+    </update>
+
+    <!--根据id删除寄送信息-->
+    <delete id="remove">
+		delete from js_send_info where send_id = #{value}
+	</delete>
+
+    <!--批量删除寄送信息-->
+    <delete id="batchRemove">
+        delete from js_send_info where send_id in
+        <foreach item="sendId" collection="array" open="(" separator="," close=")">
+            #{sendId}
+        </foreach>
+    </delete>
+
+</mapper>
