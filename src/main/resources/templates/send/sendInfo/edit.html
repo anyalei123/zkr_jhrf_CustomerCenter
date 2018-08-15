@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="sendId" name="sendId" th:value="${sendInfo.sendId}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">保单号：</label>
+								<div class="col-sm-8">
+									<input id="policyNo" name="policyNo" th:value="${sendInfo.policyNo}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">寄送单号：</label>
+								<div class="col-sm-8">
+									<input id="sendOrderno" name="sendOrderno" th:value="${sendInfo.sendOrderno}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">寄送文件类型：</label>
+								<div class="col-sm-8">
+									<select id="fileType" name="fileType" class="form-control">
+										<option id="fileTypeOption" selected th:value="${sendInfo.fileType}"></option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">保险公司：</label>
+								<div class="col-sm-8">
+									<select id="insuranceCompany" name="insuranceCompany" class="form-control" >
+										<option id="insuranceCompanyOption" selected th:value="${sendInfo.insuranceCompany}"></option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">快递公司：</label>
+								<div class="col-sm-8">
+									<select id="courierCompany" name="courierCompany" class="form-control" >
+										<option id="courierCompanyOption" selected th:value="${sendInfo.courierCompany}"></option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">寄送人类型：</label>
+								<div class="col-sm-8">
+									<select id="senderType" name="senderType" class="form-control">
+										<option id="senderTypeOption" selected th:value="${sendInfo.senderType}"></option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">寄送人姓名：</label>
+								<div class="col-sm-8">
+									<input id="senderName" name="senderName" th:value="${sendInfo.senderName}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">寄送人电话：</label>
+								<div class="col-sm-8">
+									<input id="senderMobile" name="senderMobile" th:value="${sendInfo.senderMobile}" class="form-control" type="text">
+								</div>
+							</div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">寄送人地址：</label>
+                                <div class="col-sm-8">
+                                    <div id="distpicker1">
+                                        <select id="senderProvince" name="senderAddress"></select>
+                                        <select id="senderCity" name="senderAddress"></select>
+                                        <select id="senderDistrict" name="senderAddress"></select>
+                                    </div>
+                                </div>
+                            </div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label"></label>
+								<div class="col-sm-8">
+									<input id="senderAddress" name="senderAddress" class="form-control" type="text" placeholder="寄送人详细地址">
+								    <input id="senderAddress1" name="senderAddress1" th:value="${sendInfo.senderAddress}" type="hidden">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">寄送时间：</label>
+								<div class="col-sm-8">
+									<input id="sendTime" name="sendTime" th:value="${sendInfo.sendTimeString}" class="form-control"
+										   type="text" readonly="readonly" placeholder="请选择寄送时间">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">收件人姓名：</label>
+								<div class="col-sm-8">
+									<input id="recipientName" name="recipientName" th:value="${sendInfo.recipientName}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">收件人电话：</label>
+								<div class="col-sm-8">
+									<input id="recipientMobile" name="recipientMobile" th:value="${sendInfo.recipientMobile}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">收件人地址：</label>
+								<div class="col-sm-8">
+									<div id="distpicker2">
+										<select id="recipientProvince" name="recipientAddress"></select>
+										<select id="recipientCity" name="recipientAddress"></select>
+										<select id="recipientDistrict" name="recipientAddress"></select>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label"></label>
+								<div class="col-sm-8">
+									<input id="recipientAddress" name="recipientAddress" class="form-control" type="text" placeholder="收件人详细地址">
+									<input id="recipientAddress1" name="recipientAddress1" th:value="${sendInfo.recipientAddress}" type="hidden">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">收件时间：</label>
+								<div class="col-sm-8">
+									<input id="receiptTime" name="receiptTime" th:value="${sendInfo.receiptTimeString}" class="form-control"
+										   type="text" readonly="readonly" placeholder="请选择收件时间">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">寄送内容：</label>
+								<div class="col-sm-8">
+									<input id="sendContent" name="sendContent" th:value="${sendInfo.sendContent}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">寄送描述：</label>
+								<div class="col-sm-8">
+									<input id="sendDesc" name="sendDesc" th:value="${sendInfo.sendDesc}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">寄送附件：</label>
+								<div class="col-sm-5">
+									<input id="sendAttach" name="sendAttach" class="form-control" type="text"
+										   readonly="readonly" placeholder="未选择附件">
+								</div>
+								<div class="col-sm-3">
+									<button id="uploadAttach" class="btn btn-primary">选择附件</button>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">寄送状态：</label>
+								<div class="col-sm-8">
+									<select id="sendState" name="sendState" class="form-control">
+										<option id="sendStateOption" selected th:value="${sendInfo.sendState}"></option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">冷静期起：</label>
+								<div class="col-sm-8">
+									<input id="calmPeriodStart" name="calmPeriodStart" th:value="${sendInfo.calmPeriodStartString}" class="form-control"
+										   type="text" readonly="readonly" placeholder="请选择冷静期起始日期">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">冷静期止：</label>
+								<div class="col-sm-8">
+									<input id="calmPeriodEnd" name="calmPeriodEnd" th:value="${sendInfo.calmPeriodEndString}" class="form-control"
+										   type="text" readonly="readonly" placeholder="请选择冷静期终止日期">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">创建时间：</label>
+								<div class="col-sm-8">
+									<input id="createTime" name="createTime" th:value="${sendInfo.createTimeString}" class="form-control" type="text" readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">创建人id：</label>
+								<div class="col-sm-8">
+									<input id="createById" name="createById" th:value="${sendInfo.createById}" class="form-control" type="text" readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">创建人：</label>
+								<div class="col-sm-8">
+									<input id="createBy" name="createBy" th:value="${sendInfo.createBy}" class="form-control" type="text" readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">修改时间：</label>
+								<div class="col-sm-8">
+									<input id="updateTime" name="updateTime" th:value="${sendInfo.updateTimeString}" class="form-control" type="text" readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">修改人id：</label>
+								<div class="col-sm-8">
+									<input id="updateById" name="updateById" th:value="${sendInfo.updateById}" class="form-control" type="text" readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">修改人：</label>
+								<div class="col-sm-8">
+									<input id="updateBy" name="updateBy" th:value="${sendInfo.updateBy}" class="form-control" type="text" readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	    </div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/send/sendInfo/edit.js">
+	</script>
+</body>
+</html>
