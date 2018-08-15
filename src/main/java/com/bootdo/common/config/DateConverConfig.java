@@ -22,16 +22,23 @@ public class DateConverConfig {
             public Date convert(String source) {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date date = null;
-                try {
-                    date = sdf.parse((String) source);
-                } catch (Exception e) {
-                    SimpleDateFormat sdfday = new SimpleDateFormat("yyyy-MM-dd");
+                //判断前台传递的source是否为null或"",如果不为null并且不为""则进行日期转换
+                if(source !=null && !source.equals("")){
                     try {
-                        date = sdfday.parse((String) source);
-                    } catch (ParseException e1) {
-                        e1.printStackTrace();
+                        //如果字符串格式为"yyyy-MM-dd HH:mm:ss"，使用new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")转换
+                        date = sdf.parse((String) source);
+                    } catch (Exception e) {
+                        //如果字符串格式不为"yyyy-MM-dd HH:mm:ss"，使用new SimpleDateFormat("yyyy-MM-dd")转换
+                        SimpleDateFormat sdfday = new SimpleDateFormat("yyyy-MM-dd");
+                        try {
+                            date = sdfday.parse((String) source);
+                        } catch (ParseException e1) {
+                            //如果字符串格式为其他格式，抛异常
+                            e1.printStackTrace();
+                        }
                     }
                 }
+
                 return date;
             }
         };
