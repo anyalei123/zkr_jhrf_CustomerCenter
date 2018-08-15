@@ -170,17 +170,17 @@
             <if test="senderName != null">`sender_name` = #{senderName},</if>
             <if test="senderMobile != null">`sender_mobile` = #{senderMobile},</if>
             <if test="senderAddress != null">`sender_address` = #{senderAddress},</if>
-            <if test="sendTime != null">`send_time` = #{sendTime},</if>
+            <if test="sendTime != null or sendTime == null">`send_time` = #{sendTime},</if>
             <if test="recipientName != null">`recipient_name` = #{recipientName},</if>
             <if test="recipientMobile != null">`recipient_mobile` = #{recipientMobile},</if>
             <if test="recipientAddress != null">`recipient_address` = #{recipientAddress},</if>
-            <if test="receiptTime != null">`receipt_time` = #{receiptTime},</if>
+            <if test="receiptTime != null or receiptTime == null">`receipt_time` = #{receiptTime},</if>
             <if test="sendContent != null">`send_content` = #{sendContent},</if>
             <if test="sendDesc != null">`send_desc` = #{sendDesc},</if>
             <if test="sendAttach != null">`send_attach` = #{sendAttach},</if>
             <if test="sendState != null">`send_state` = #{sendState},</if>
-            <if test="calmPeriodStart != null">`calm_period_start` = #{calmPeriodStart},</if>
-            <if test="calmPeriodEnd != null">`calm_period_end` = #{calmPeriodEnd},</if>
+            <if test="calmPeriodStart != null or calmPeriodStart == null">`calm_period_start` = #{calmPeriodStart},</if>
+            <if test="calmPeriodEnd != null or calmPeriodEnd == null">`calm_period_end` = #{calmPeriodEnd},</if>
             <if test="createTime != null">`create_time` = #{createTime},</if>
             <if test="createById != null">`create_by_id` = #{createById},</if>
             <if test="createBy != null">`create_by` = #{createBy},</if>
