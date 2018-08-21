@@ -36,6 +36,16 @@ public class SendInfoServiceImpl implements SendInfoService {
 	}
 
 	/**
+	 * 根据寄送单号查询寄送信息
+	 * @param sendOrderno
+	 * @return
+	 */
+	@Override
+	public SendInfoDO getByOrderno(String sendOrderno){
+		return sendInfoDao.getByOrderno(sendOrderno);
+	}
+
+	/**
 	 * 查询寄送信息列表
 	 * @param map
 	 * @return
