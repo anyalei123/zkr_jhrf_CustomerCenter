@@ -24,6 +24,13 @@ public interface SendInfoDao {
 	SendInfoDO get(String sendId);
 
 	/**
+	 * 根据寄送单号查询寄送信息
+	 * @param sendOrderno
+	 * @return
+	 */
+	SendInfoDO getByOrderno(String sendOrderno);
+
+	/**
 	 * 查询寄送信息列表
 	 * @param map
 	 * @return
