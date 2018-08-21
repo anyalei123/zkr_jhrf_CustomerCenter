@@ -37,12 +37,14 @@ public class LocaleConfig extends WebMvcConfigurerAdapter {
         lci.setParamName("lang");
         return lci;
     }
-
-//    @Bean
-//    public LocaleInterceptor localeInterceptor(){
-//        return new LocaleInterceptor();
-//    }
-
+    
+    //去掉国际化拦截器代码
+  /*  @Bean
+    public LocaleInterceptor localeInterceptor(){
+        return new LocaleInterceptor();
+    }
+*/
+  //去掉国际化拦截器代码
 //    @Override
 //    public void addInterceptors(InterceptorRegistry registry) {
 //        registry.addInterceptor(localeChangeInterceptor());
