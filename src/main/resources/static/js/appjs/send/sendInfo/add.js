@@ -100,16 +100,19 @@ $.validator.setDefaults({
 
 //提交表单，保存数据
 function save() {
+    var formData = new FormData($("#signupForm")[0]);
 	$.ajax({
-		cache : true, //从浏览器缓存中加载请求信息
-		type : "POST", //请求方式
-		url : "/send/sendInfo/save", //请求地址
-		data : $('#signupForm').serialize(), //发送到服务器的数据
-		async : false, //同步请求
-		error : function(request) { //请求失败时回调
+		cache : true,
+		type : "POST",
+		url : "/send/sendInfo/save",
+        data : formData, //发送到服务器的数据
+		async : false,
+        processData : false,  //必须false才会避开jQuery对 formdata 的默认处理
+        contentType : false,  //必须false才会自动加上正确的Content-Type
+		error : function(request) {
 			parent.layer.alert("Connection error");
 		},
-		success : function(data) { //请求成功后回调
+		success : function(data) {
 			if (data.code == 0) {
 				parent.layer.msg("操作成功");
 				parent.reLoad(); //刷新列表
