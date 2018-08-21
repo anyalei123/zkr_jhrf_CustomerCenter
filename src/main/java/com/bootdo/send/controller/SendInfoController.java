@@ -152,6 +152,10 @@ public class SendInfoController extends BaseController {
 		sendInfo.setUpdateById(String.valueOf(this.getUserId()));
 		sendInfo.setCreateBy(this.getUsername());
 		sendInfo.setUpdateBy(this.getUsername());
+        //去除空格
+		sendInfo.setPolicyNo(sendInfo.getPolicyNo().trim());
+		sendInfo.setSendOrderno(sendInfo.getSendOrderno().trim());
+		sendInfo.setFileType(sendInfo.getFileType().trim());
 		//保存成功
 		if(sendInfoService.save(sendInfo)>0){
 			return R.ok();
@@ -172,6 +176,10 @@ public class SendInfoController extends BaseController {
 		//设置修改人
 		sendInfo.setUpdateById(String.valueOf(this.getUserId()));
 		sendInfo.setUpdateBy(this.getUsername());
+		//去除空格
+		sendInfo.setPolicyNo(sendInfo.getPolicyNo().trim());
+		sendInfo.setSendOrderno(sendInfo.getSendOrderno().trim());
+		sendInfo.setFileType(sendInfo.getFileType().trim());
 		//修改成功
 		if(sendInfoService.update(sendInfo)>0){
 			return R.ok();
