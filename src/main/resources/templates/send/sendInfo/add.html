@@ -8,7 +8,7 @@
 			<div class="col-sm-12">
 				<div class="ibox float-e-margins">
 					<div class="ibox-content">
-						<form class="form-horizontal m-t" id="signupForm">
+						<form class="form-horizontal m-t" id="signupForm" method="post" enctype="multipart/form-data">
 							<div class="form-group">	
 								<label class="col-sm-2 control-label">保单号：</label>
 								<div class="col-sm-4">
@@ -136,11 +136,10 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">寄送附件：</label>
 								<div class="col-sm-2">
-									<input id="sendAttach" name="sendAttach" class="form-control" type="text"
-										   readonly="readonly" placeholder="未选择附件">
+									<input id="sendAttach" name="file" type="file">
 								</div>
 								<div class="col-sm-2">
-									<button id="uploadAttach" class="btn btn-primary">选择附件</button>
+									<input type="hidden" >
 								</div>
 								<label class="col-sm-2 control-label">寄送状态：</label>
 								<div class="col-sm-4">
@@ -165,7 +164,7 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-8 col-sm-offset-3">
-									<button type="submit" class="btn btn-primary">提交</button>
+									<button id="submitInfo" type="submit" class="btn btn-primary">提交</button>
 								</div>
 							</div>
 						</form>
