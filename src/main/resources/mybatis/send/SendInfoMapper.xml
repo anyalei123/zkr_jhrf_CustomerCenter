@@ -8,6 +8,11 @@
 		select `send_id`,`policy_no`,`send_orderno`,`file_type`,`insurance_company`,`courier_company`,`sender_type`,`sender_name`,`sender_mobile`,`sender_address`,`send_time`,`recipient_name`,`recipient_mobile`,`recipient_address`,`receipt_time`,`send_content`,`send_desc`,`send_attach`,`send_state`,`calm_period_start`,`calm_period_end`,`create_time`,`create_by_id`,`create_by`,`update_time`,`update_by_id`,`update_by` from js_send_info where send_id = #{value}
 	</select>
 
+    <!--根据寄送单号查询寄送信息-->
+    <select id="getByOrderno" resultType="com.bootdo.send.domain.SendInfoDO">
+		select `send_id`,`policy_no`,`send_orderno`,`file_type`,`insurance_company`,`courier_company`,`sender_type`,`sender_name`,`sender_mobile`,`sender_address`,`send_time`,`recipient_name`,`recipient_mobile`,`recipient_address`,`receipt_time`,`send_content`,`send_desc`,`send_attach`,`send_state`,`calm_period_start`,`calm_period_end`,`create_time`,`create_by_id`,`create_by`,`update_time`,`update_by_id`,`update_by` from js_send_info where send_orderno = #{value}
+	</select>
+
     <!--查询寄送信息列表和分页信息-->
     <select id="list" resultType="com.bootdo.send.domain.SendInfoDO">
         select
