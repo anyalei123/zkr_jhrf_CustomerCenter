@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<link href="/css/layui.css" rel="stylesheet">
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+    <div class="col-sm-12">
+        <div class="ibox">
+            <div class="ibox-body">
+                <div class="fixed-table-toolbar">
+                        <label style="font-size: 20px;">寄送信息文件：</label>
+                        <button shiro:hasPermission="send:sendInfo:import" type="button" class="layui-btn"
+                                id="selectFile" >
+                            <i class="fa fa-cloud" aria-hidden="true"></i>选择文件
+                        </button>
+                </div>
+                <br>
+                <div class="columns pull-right col-md-8 nopadding">
+                    <button shiro:hasPermission="send:sendInfo:import" type="button" class="btn  btn-info"
+                            id="downloadTemplate" onclick="downloadTemplate();">
+                        <i class="fa fa-download" aria-hidden="true"></i>模板下载
+                    </button>
+                    <button shiro:hasPermission="send:sendInfo:import" type="button" class="btn  btn-success"
+                            id="importExcel" >
+                        <i class="fa fa-plus" aria-hidden="true"></i>导入
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper wrapper-content ">
+    <div class="col-sm-12">
+                <p style="color: darkred;align-content: center">
+                    <br/><br/><br/>
+                    1.请先下载模板并填写数据后再进行导入；<br/>
+                    2.保单号，寄送单号，寄送文件类型，寄送人类型，寄送人姓名，寄送人电话，寄送人地址，收件人姓名，收件人电话，收件人地址，寄送内容，寄送状态为必填项；<br/>
+                    3.寄送单号不可重复；<br/>
+                    4.寄送文件类型填写：0（代表纸质保单），1（代表其他类型）；<br/>
+                    5.寄送人类型填写：0（代表代理人），1（代表客户）；<br/>
+                    6.地址填写格式为：✖✖省,✖✖市,✖✖区,✖✖✖✖✖✖<br/>
+                    7.时间填写格式为：yyyy-MM-dd HH:mm:ss<br/>
+                    8.寄送状态填写：0（代表寄送中），1（代表已签收）；
+                </p>
+    </div>
+</div>
+
+<div th:include="include :: footer"></div>
+<script src="/js/layui.js"></script>
+<script type="text/javascript" src="/js/appjs/send/sendInfo/import.js"></script>
+</body>
+</html>
