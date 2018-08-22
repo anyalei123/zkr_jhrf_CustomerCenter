@@ -28,10 +28,14 @@ public class PlaceholderDO implements Serializable {
 	private String placeholderDesc;
 	//创建时间
 	private Date createTime;
-	//创建人
-	private String createBy;
 	//修改时间
 	private Date updateTime;
+	//创建人ID
+	private String createById;
+	//修改人ID
+	private String updateById;
+	//创建人
+	private String createBy;
 	//修改人
 	private String updateBy;
 
@@ -124,18 +128,6 @@ public class PlaceholderDO implements Serializable {
 		return createTime;
 	}
 	/**
-	 * 设置：创建人
-	 */
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
-	}
-	/**
-	 * 获取：创建人
-	 */
-	public String getCreateBy() {
-		return createBy;
-	}
-	/**
 	 * 设置：修改时间
 	 */
 	public void setUpdateTime(Date updateTime) {
@@ -146,6 +138,42 @@ public class PlaceholderDO implements Serializable {
 	 */
 	public Date getUpdateTime() {
 		return updateTime;
+	}
+	/**
+	 * 设置：创建人ID
+	 */
+	public void setCreateById(String createById) {
+		this.createById = createById;
+	}
+	/**
+	 * 获取：创建人ID
+	 */
+	public String getCreateById() {
+		return createById;
+	}
+	/**
+	 * 设置：修改人ID
+	 */
+	public void setUpdateById(String updateById) {
+		this.updateById = updateById;
+	}
+	/**
+	 * 获取：修改人ID
+	 */
+	public String getUpdateById() {
+		return updateById;
+	}
+	/**
+	 * 设置：创建人
+	 */
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+	/**
+	 * 获取：创建人
+	 */
+	public String getCreateBy() {
+		return createBy;
 	}
 	/**
 	 * 设置：修改人
