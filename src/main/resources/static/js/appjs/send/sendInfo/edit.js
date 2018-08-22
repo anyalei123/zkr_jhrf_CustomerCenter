@@ -213,6 +213,13 @@ $().ready(function() {
         $("#sendStateOption").text("已签收");
         sendStateSelect.append("<option value='0'>寄送中</option>");
     }
+
+    //寄送附件的回显
+    var attachUrl = $("#hidden").val();
+    if(attachUrl!=null&&attachUrl!=""){
+        var attachName = attachUrl.substring(attachUrl.lastIndexOf("/")+1);
+        $("#aId").text(attachName);
+    }
 });
 
 $.validator.setDefaults({
@@ -224,12 +231,15 @@ $.validator.setDefaults({
 
 //提交表单，修改数据
 function update() {
+    var formData = new FormData($("#signupForm")[0]);
 	$.ajax({
-		cache : true, //从浏览器缓存中加载请求信息
-		type : "POST", //请求方式
-		url : "/send/sendInfo/update", //请求地址
-		data : $('#signupForm').serialize(), //发送到服务器的数据
-		async : false, //同步请求
+		cache : true,
+		type : "POST",
+		url : "/send/sendInfo/update",
+        data : formData, //发送到服务器的数据
+		async : false,
+        processData : false,  //必须false才会避开jQuery对 formdata 的默认处理
+        contentType : false,  //必须false才会自动加上正确的Content-Type
 		error : function(request) { //请求失败时回调
 			parent.layer.alert("Connection error");
 		},
