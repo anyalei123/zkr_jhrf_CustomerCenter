@@ -129,12 +129,18 @@ function load() {
 								},
 								{
 									field : 'sendAttach', 
-									title : '寄送附件'
+									title : '寄送附件',
+                                    formatter:function format3(value,row,index){
+										if(value!=null&&value!=""){
+                                            var attachName = value.substring(value.lastIndexOf("/")+1);
+                                            return "<a href='"+value+"'>"+attachName+"</a>";
+										}
+                                    }
 								},
 								{
 									field : 'sendState', 
 									title : '寄送状态',
-                                    formatter:function format3(value,row,index){
+                                    formatter:function format4(value,row,index){
                                         if(value == "0"){
                                             return "寄送中";
                                         }else if(value == "1"){
