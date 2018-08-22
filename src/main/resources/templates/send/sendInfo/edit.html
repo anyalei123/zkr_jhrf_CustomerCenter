@@ -8,7 +8,7 @@
 			<div class="col-sm-12">
 				<div class="ibox float-e-margins">
 					<div class="ibox-content">
-						<form class="form-horizontal m-t" id="signupForm">
+						<form class="form-horizontal m-t" id="signupForm" method="post" enctype="multipart/form-data">
 						<input id="sendId" name="sendId" th:value="${sendInfo.sendId}"  type="hidden">
 							<div class="form-group">	
 								<label class="col-sm-2 control-label">保单号：</label>
@@ -129,11 +129,11 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">寄送附件：</label>
 								<div class="col-sm-2">
-									<input id="sendAttach" name="sendAttach" class="form-control" type="text"
-										   readonly="readonly" placeholder="未选择附件">
+                                    <a id="aId" th:href="${sendInfo.sendAttach}"></a>
+									<input id="sendAttach" name="file" type="file">
 								</div>
 								<div class="col-sm-2">
-									<button id="uploadAttach" class="btn btn-primary">选择附件</button>
+									<input id="hidden" name="sendAttach" type="hidden" th:value="${sendInfo.sendAttach}" >
 								</div>
 								<label class="col-sm-2 control-label">寄送状态：</label>
 								<div class="col-sm-4">
