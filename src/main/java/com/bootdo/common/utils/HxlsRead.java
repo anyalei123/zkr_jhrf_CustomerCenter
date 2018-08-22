@@ -9,28 +9,28 @@ import java.util.List;
 public class HxlsRead extends HxlsAbstract{
 
 	
-	//æ•°æ®å¤„ç†è§£ææ•°æ®çš„æ¥å£
+	//Êı¾İ´¦Àí½âÎöÊı¾İµÄ½Ó¿Ú
 	private  HxlsOptRowsInterface hxlsOptRowsInterface;
-	//å¤„ç†æ•°æ®æ€»æ•°
+	//´¦ÀíÊı¾İ×ÜÊı
 	private int optRows_sum = 0;
-	//å¤„ç†æ•°æ®æˆåŠŸæ•°é‡
+	//´¦ÀíÊı¾İ³É¹¦ÊıÁ¿
 	private int optRows_success = 0;
-	//å¤„ç†æ•°æ®å¤±è´¥æ•°é‡
+	//´¦ÀíÊı¾İÊ§°ÜÊıÁ¿
 	private int optRows_failure = 0;
-	//excelè¡¨æ ¼æ¯åˆ—æ ‡é¢˜
+	//excel±í¸ñÃ¿ÁĞ±êÌâ
 	private List<String> rowtitle ;
-	//å¤±è´¥æ•°æ®
+	//Ê§°ÜÊı¾İ
 	private List<List<String>> failrows;
-	//å¤±è´¥åŸå› 
+	//Ê§°ÜÔ­Òò
 	private List<String> failmsgs ;
 	
-	//è¦å¤„ç†æ•°æ®æ‰€åœ¨çš„sheetç´¢å¼•,sheetç´¢å¼•ä»0å¼€å§‹
+	//Òª´¦ÀíÊı¾İËùÔÚµÄsheetË÷Òı,sheetË÷Òı´Ó0¿ªÊ¼
 	private int sheetIndex;
 	/**
-	 * å¯¼å…¥æ–‡ä»¶çš„åç§°
-	 * @param filename å¯¼å…¥æ–‡ä»¶çš„ç‰©ç†è·¯å¾„ 
-	 * @param sheetIndex è¦è¯»å–æ•°æ®æ‰€åœ¨sheetåºå·
-	 * @param hxlsOptRowsInterface å¤„ç†è¯»å–æ¯ä¸€è¡Œæ•°æ®çš„æ¥å£
+	 * µ¼ÈëÎÄ¼şµÄÃû³Æ
+	 * @param filename µ¼ÈëÎÄ¼şµÄÎïÀíÂ·¾¶ 
+	 * @param sheetIndex Òª¶ÁÈ¡Êı¾İËùÔÚsheetĞòºÅ
+	 * @param hxlsOptRowsInterface ´¦Àí¶ÁÈ¡Ã¿Ò»ĞĞÊı¾İµÄ½Ó¿Ú
 	 * @throws IOException
 	 * @throws FileNotFoundException
 	 * @throws SQLException
@@ -46,7 +46,7 @@ public class HxlsRead extends HxlsAbstract{
 	}
 
 	/**
-	 * å¯¹è¯»å–åˆ°ä¸€è¡Œæ•°æ®è¿›è¡Œè§£æ
+	 * ¶Ô¶ÁÈ¡µ½Ò»ĞĞÊı¾İ½øĞĞ½âÎö
 	 */
 	@Override
 	public void optRows(int sheetIndex,int curRow, List<String> rowlist) throws Exception {
@@ -54,7 +54,7 @@ public class HxlsRead extends HxlsAbstract{
 			System.out.print("'"+rowlist.get(i)+"',");
 		}
 		System.out.println();*/
-		//å°†rowlistçš„é•¿åº¦è¡¥é½å’Œæ ‡é¢˜ä¸€è‡´
+		//½«rowlistµÄ³¤¶È²¹ÆëºÍ±êÌâÒ»ÖÂ
 		int k=rowtitle.size()-rowlist.size();
 		for(int i=0;i<k;i++){
 			rowlist.add(null);
@@ -62,14 +62,14 @@ public class HxlsRead extends HxlsAbstract{
 		if(sheetIndex == this.sheetIndex){
 			optRows_sum++;
 			
-			if(curRow == 0){//è®°å½•æ ‡é¢˜
+			if(curRow == 0){//¼ÇÂ¼±êÌâ
 				rowtitle.addAll(rowlist);
 			}else{
-				//æ¥å£è¿”å›çš„ç»“æœæ˜¯å¯¼å…¥æ•°æ®çš„ç»“æœï¼Œæœ‰æˆåŠŸï¼Œæœ‰å¤±è´¥
+				//½Ó¿Ú·µ»ØµÄ½á¹ûÊÇµ¼ÈëÊı¾İµÄ½á¹û£¬ÓĞ³É¹¦£¬ÓĞÊ§°Ü
 				String result = hxlsOptRowsInterface.optRows(sheetIndex, curRow, rowlist);
 				if(result!=null && !result.equals(hxlsOptRowsInterface.SUCCESS)){
-					optRows_failure++;//å¤±è´¥ç»Ÿè®¡æ•°åŠ 1
-					//å¤±è´¥æ•°æ®åˆ—è¡¨
+					optRows_failure++;//Ê§°ÜÍ³¼ÆÊı¼Ó1
+					//Ê§°ÜÊı¾İÁĞ±í
 					failrows.add(new ArrayList<String>(rowlist));
 					failmsgs.add(result);
 				}else{
@@ -126,9 +126,9 @@ public class HxlsRead extends HxlsAbstract{
 	public static void main(String[] args){
 		HxlsRead xls2csv;
 		try {
-			//ç¬¬ä¸€ä¸ªå‚æ•°å°±æ˜¯å¯¼å…¥çš„æ–‡ä»¶
-			//ç¬¬äºŒä¸ªå‚æ•°å°±æ˜¯å¯¼å…¥æ–‡ä»¶ä¸­å“ªä¸ªsheet
-			//ç¬¬ä¸‰ä¸ªå‚æ•°å¯¼å…¥æ¥å£çš„å®ç°ç±»å¯¹è±¡
+			//µÚÒ»¸ö²ÎÊı¾ÍÊÇµ¼ÈëµÄÎÄ¼ş
+			//µÚ¶ş¸ö²ÎÊı¾ÍÊÇµ¼ÈëÎÄ¼şÖĞÄÄ¸ösheet
+			//µÚÈı¸ö²ÎÊıµ¼Èë½Ó¿ÚµÄÊµÏÖÀà¶ÔÏó
 			xls2csv = new HxlsRead("d:/test11.xls",0,new HxlsOptRowsInterfaceImpl());
 			xls2csv.process();
 		} catch (FileNotFoundException e) {
