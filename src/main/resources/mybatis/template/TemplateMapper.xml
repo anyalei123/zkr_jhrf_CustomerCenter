@@ -5,12 +5,12 @@
 
 	<!--根据id查询模板-->
 	<select id="get" resultType="com.bootdo.template.domain.TemplateDO">
-		select `template_id`,`template_name`,`template_language`,`template_content`,`template_version`,`effect_time`,`remarks`,`type_id`,`create_by`,`create_time`,`update_by`,`update_time` from mb_template where template_id = #{value}
+		select `template_id`,`template_name`,`template_language`,`template_content`,`template_version`,`effect_time`,`remarks`,`type_id`,`create_time`,`update_time`,`create_by_id`,`update_by_id`,`create_by`,`update_by` from mb_template where template_id = #{value}
 	</select>
 
 	<!--查询模板列表数据以及分页信息-->
 	<select id="list" resultType="com.bootdo.template.domain.TemplateDO">
-		select `template_id`,`template_name`,`template_language`,`template_content`,`template_version`,`effect_time`,`remarks`,`type_id`,`create_by`,`create_time`,`update_by`,`update_time` from mb_template
+		select `template_id`,`template_name`,`template_language`,`template_content`,`template_version`,`effect_time`,`remarks`,`type_id`,`create_time`,`update_time`,`create_by_id`,`update_by_id`,`create_by`,`update_by` from mb_template
         <where>  
 		  		  <if test="templateId != null and templateId != ''"> and template_id = #{templateId} </if>
 		  		  <if test="templateName != null and templateName != ''"> and template_name like concat('%',#{templateName},'%') </if>
@@ -20,10 +20,12 @@
 				  <if test="effectTime != null and effectTime != ''"> and effect_time = #{effectTime} </if>
 				  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
 				  <if test="typeId != null and typeId != ''"> and type_id = #{typeId} </if>
-		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
 			      <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
-		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
 			      <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+			      <if test="createById != null and createById != ''"> and create_by_id = #{createById} </if>
+			      <if test="updateById != null and updateById != ''"> and update_by_id = #{updateById} </if>
+			      <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
 		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -50,10 +52,12 @@
 			 <if test="effectTime != null and effectTime != ''"> and effect_time = #{effectTime} </if>
 			 <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
 			 <if test="typeId != null and typeId != ''"> and type_id = #{typeId} </if>
-			 <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
 			 <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
-			 <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
 			 <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+			 <if test="createById != null and createById != ''"> and create_by_id = #{createById} </if>
+			 <if test="updateById != null and updateById != ''"> and update_by_id = #{updateById} </if>
+			 <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+			 <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
 		 </where>
 	</select>
 
@@ -69,10 +73,12 @@
 			`effect_time`,
 			`remarks`,
 			`type_id`,
-			`create_by`,
 			`create_time`,
-			`update_by`,
-			`update_time`
+			`update_time`,
+			`create_by_id`,
+			`update_by_id`,
+			`create_by`,
+			`update_by`
 		)
 		values
 		(
@@ -84,10 +90,12 @@
 			#{effectTime},
 			#{remarks},
 			#{typeId},
-			#{createBy},
 			#{createTime},
-			#{updateBy},
-			#{updateTime}
+			#{updateTime},
+			#{createById},
+			#{updateById},
+			#{createBy},
+			#{updateBy}
 		)
 	</insert>
 
@@ -99,13 +107,15 @@
 			<if test="templateLanguage != null">`template_language` = #{templateLanguage}, </if>
 			<if test="templateContent != null">`template_content` = #{templateContent}, </if>
 			<if test="templateVersion != null">`template_version` = #{templateVersion}, </if>
-			<if test="effectTime != null">`effect_time` = #{effectTime}, </if>
+			<if test="effectTime != null or effectTime == null">`effect_time` = #{effectTime}, </if>
 			<if test="remarks != null">`remarks` = #{remarks},</if>
 			<if test="typeId != null">`type_id` = #{typeId}, </if>
-			<if test="createBy != null">`create_by` = #{createBy}, </if>
 			<if test="createTime != null">`create_time` = #{createTime}, </if>
-			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
-			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="createById != null">`create_by_id` = #{createById}, </if>
+			<if test="updateById != null">`update_by_id` = #{updateById}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy} </if>
 		</set>
 		where template_id = #{templateId}
 	</update>
