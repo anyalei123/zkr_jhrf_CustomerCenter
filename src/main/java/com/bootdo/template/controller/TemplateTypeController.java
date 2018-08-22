@@ -33,7 +33,11 @@ public class TemplateTypeController extends BaseController {
 
 	@Autowired
 	private TemplateTypeService templateTypeService;
-	
+
+	/**
+	 * 到模板类型列表页面
+	 * @return
+	 */
 	@GetMapping()
 	@RequiresPermissions("template:templateType:templateType")
 	String TemplateType(){
@@ -49,13 +53,10 @@ public class TemplateTypeController extends BaseController {
 	@GetMapping("/list")
 	@RequiresPermissions("template:templateType:templateType")
 	public PageUtils list(@RequestParam Map<String, Object> params){
-		//封装前台传递的参数
         Query query = new Query(params);
         //查询模板类型列表数据
 		List<TemplateTypeDO> templateTypeList = templateTypeService.list(query);
-		//查询模板类型列表数据总条数
 		int total = templateTypeService.count(query);
-		//封装列表数据和总条数
 		PageUtils pageUtils = new PageUtils(templateTypeList, total);
 		return pageUtils;
 	}
@@ -69,7 +70,6 @@ public class TemplateTypeController extends BaseController {
 	@RequestMapping("/listJson")
 	@RequiresPermissions("template:templateType:templateType")
 	public List<TemplateTypeDO> listJson(){
-		//查询模板类型列表数据
 		List<TemplateTypeDO> templateTypeList = templateTypeService.listJson();
 		return templateTypeList;
 	}
@@ -84,7 +84,6 @@ public class TemplateTypeController extends BaseController {
 	@RequestMapping("/get/{typeId}")
 	@RequiresPermissions("template:templateType:templateType")
 	public TemplateTypeDO get(@PathVariable String typeId){
-		//根据id查询模板类型
 		TemplateTypeDO templateType = templateTypeService.get(typeId);
 		return templateType;
 	}
@@ -110,7 +109,6 @@ public class TemplateTypeController extends BaseController {
 	String edit(@PathVariable("typeId") String typeId,Model model){
 		//根据id查询模板类型
 		TemplateTypeDO templateType = templateTypeService.get(typeId);
-		//将查询到的模板类型对象封装到model中用于在页面回显信息
 		model.addAttribute("templateType", templateType);
 	    return "template/templateType/edit";
 	}
@@ -124,12 +122,11 @@ public class TemplateTypeController extends BaseController {
 	@PostMapping("/save")
 	@RequiresPermissions("template:templateType:add")
 	public R save( TemplateTypeDO templateType){
-		//获取当前登录的用户名
-		String username = this.getUsername();
-		//设置创建人为当前登录用户
-		templateType.setCreateBy(username);
-		//设置修改人为当前登录用户
-		templateType.setUpdateBy(username);
+		//设置创建人和修改人
+		templateType.setCreateById(String.valueOf(this.getUserId()));
+		templateType.setUpdateById(String.valueOf(this.getUserId()));
+		templateType.setCreateBy(this.getUsername());
+		templateType.setUpdateBy(this.getUsername());
 		//保存成功
 		if(templateTypeService.save(templateType)>0){
 			return R.ok();
@@ -147,10 +144,9 @@ public class TemplateTypeController extends BaseController {
 	@RequestMapping("/update")
 	@RequiresPermissions("template:templateType:edit")
 	public R update( TemplateTypeDO templateType){
-		//获取当前登录的用户名
-		String username = this.getUsername();
-		//设置修改人为当前登录用户
-		templateType.setUpdateBy(username);
+		//设置修改人
+		templateType.setUpdateById(String.valueOf(this.getUserId()));
+		templateType.setUpdateBy(this.getUsername());
 		//修改成功
 		if(templateTypeService.update(templateType)>0){
 			return R.ok();
@@ -186,9 +182,8 @@ public class TemplateTypeController extends BaseController {
 	@ResponseBody
 	@RequiresPermissions("template:templateType:batchRemove")
 	public R remove(@RequestParam("ids[]") String[] typeIds,Integer selectRows){
-		//删除成功的条数
-		int removeRows = templateTypeService.batchRemove(typeIds);
 		//如果删除成功的条数等于选中的条数，说明全部删除成功
+		int removeRows = templateTypeService.batchRemove(typeIds);
 		if(removeRows == selectRows){
 			return R.ok();
 		}

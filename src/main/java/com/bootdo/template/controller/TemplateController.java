@@ -33,7 +33,11 @@ public class TemplateController extends BaseController {
 
 	@Autowired
 	private TemplateService templateService;
-	
+
+	/**
+	 * 到模板列表页面
+	 * @return
+	 */
 	@GetMapping()
 	@RequiresPermissions("template:template:template")
 	String Template(){
@@ -49,13 +53,10 @@ public class TemplateController extends BaseController {
 	@GetMapping("/list")
 	@RequiresPermissions("template:template:template")
 	public PageUtils list(@RequestParam Map<String, Object> params){
-		//封装前台传递的参数
         Query query = new Query(params);
 		//查询模板列表数据
 		List<TemplateDO> templateList = templateService.list(query);
-		//查询模板列表数据总条数
 		int total = templateService.count(query);
-		//封装列表数据和总条数
 		PageUtils pageUtils = new PageUtils(templateList, total);
 		return pageUtils;
 	}
@@ -81,7 +82,6 @@ public class TemplateController extends BaseController {
 	String edit(@PathVariable("templateId") String templateId,Model model){
 		//根据模板id查询模板
 		TemplateDO template = templateService.get(templateId);
-		//将查询到的模板对象封装到model中用于在页面回显信息
 		model.addAttribute("template", template);
 	    return "template/template/edit";
 	}
@@ -95,12 +95,11 @@ public class TemplateController extends BaseController {
 	@PostMapping("/save")
 	@RequiresPermissions("template:template:add")
 	public R save( TemplateDO template){
-		//获取当前登录的用户名
-		String username = this.getUsername();
-		//设置创建人为当前登录用户
-		template.setCreateBy(username);
-		//设置修改人为当前登录用户
-		template.setUpdateBy(username);
+		//设置创建人和修改人
+		template.setCreateById(String.valueOf(this.getUserId()));
+		template.setUpdateById(String.valueOf(this.getUserId()));
+		template.setCreateBy(this.getUsername());
+		template.setUpdateBy(this.getUsername());
 		//保存成功
 		if(templateService.save(template)>0){
 			return R.ok();
@@ -118,10 +117,9 @@ public class TemplateController extends BaseController {
 	@RequestMapping("/update")
 	@RequiresPermissions("template:template:edit")
 	public R update( TemplateDO template){
-		//获取当前登录的用户名
-		String username = this.getUsername();
-		//设置修改人为当前登录用户
-		template.setUpdateBy(username);
+		//设置修改人
+		template.setUpdateById(String.valueOf(this.getUserId()));
+		template.setUpdateBy(this.getUsername());
 		//修改成功
 		if(templateService.update(template)>0){
 			return R.ok();

@@ -33,7 +33,11 @@ public class PlaceholderController extends BaseController {
 
 	@Autowired
 	private PlaceholderService placeholderService;
-	
+
+	/**
+	 * 到占位符列表页面
+	 * @return
+	 */
 	@GetMapping()
 	@RequiresPermissions("template:placeholder:placeholder")
 	String Placeholder(){
@@ -49,13 +53,10 @@ public class PlaceholderController extends BaseController {
 	@GetMapping("/list")
 	@RequiresPermissions("template:placeholder:placeholder")
 	public PageUtils list(@RequestParam Map<String, Object> params){
-		//封装前台传递的参数
         Query query = new Query(params);
 		//查询占位符列表数据
 		List<PlaceholderDO> placeholderList = placeholderService.list(query);
-		//查询占位符列表数据总条数
 		int total = placeholderService.count(query);
-		//封装列表数据和总条数
 		PageUtils pageUtils = new PageUtils(placeholderList, total);
 		return pageUtils;
 	}
@@ -81,7 +82,6 @@ public class PlaceholderController extends BaseController {
 	String edit(@PathVariable("placeholderId") String placeholderId,Model model){
 		//根据占位符id查询占位符
 		PlaceholderDO placeholder = placeholderService.get(placeholderId);
-		//将查询到的占位符对象封装到model中用于在页面回显信息
 		model.addAttribute("placeholder", placeholder);
 	    return "template/placeholder/edit";
 	}
@@ -95,12 +95,11 @@ public class PlaceholderController extends BaseController {
 	@PostMapping("/save")
 	@RequiresPermissions("template:placeholder:add")
 	public R save( PlaceholderDO placeholder){
-		//获取当前登录的用户名
-		String username = this.getUsername();
-		//设置创建人为当前登录用户
-		placeholder.setCreateBy(username);
-		//设置修改人为当前登录用户
-		placeholder.setUpdateBy(username);
+		//设置创建人和修改人
+        placeholder.setCreateById(String.valueOf(this.getUserId()));
+        placeholder.setUpdateById(String.valueOf(this.getUserId()));
+		placeholder.setCreateBy(this.getUsername());
+		placeholder.setUpdateBy(this.getUsername());
 		//保存成功
 		if(placeholderService.save(placeholder)>0){
 			return R.ok();
@@ -118,10 +117,9 @@ public class PlaceholderController extends BaseController {
 	@RequestMapping("/update")
 	@RequiresPermissions("template:placeholder:edit")
 	public R update( PlaceholderDO placeholder){
-		//获取当前登录的用户名
-		String username = this.getUsername();
-		//设置修改人为当前登录的用户
-		placeholder.setUpdateBy(username);
+		//设置修改人
+		placeholder.setUpdateById(String.valueOf(this.getUserId()));
+		placeholder.setUpdateBy(this.getUsername());
 		//修改成功
 		if(placeholderService.update(placeholder)>0){
 			return R.ok();
