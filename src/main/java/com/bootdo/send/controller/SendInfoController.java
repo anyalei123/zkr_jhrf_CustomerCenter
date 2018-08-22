@@ -120,14 +120,12 @@ public class SendInfoController extends BaseController {
 	}
 
 	/**
-	 * 保存寄送信息
+	 * 寄送附件上传
 	 * @param sendInfo
-	 * @return
+	 * @param request
+	 * @throws Exception
 	 */
-	@ResponseBody
-	@PostMapping("/save")
-	@RequiresPermissions("send:sendInfo:add")
-	public R save( SendInfoDO sendInfo,HttpServletRequest request)throws Exception{
+	public void uploadAttach(SendInfoDO sendInfo,HttpServletRequest request)throws Exception{
 		if (request != null && request instanceof MultipartHttpServletRequest) {
 			MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
 			// 获取上传的文件
@@ -135,7 +133,6 @@ public class SendInfoController extends BaseController {
 			for(Map.Entry<String, MultipartFile> entry : fileMap.entrySet()){
 				// 对文件进行处理
 				String fileName = entry.getValue().getOriginalFilename();
-				System.out.println("fileName:"+fileName);
 				if(fileName != null && !"".equals(fileName)){
 					String extName = fileName.substring(fileName.lastIndexOf("."));
 					String newFileName = GenerateSequenceUtil.generateSequenceNo();
@@ -146,7 +143,22 @@ public class SendInfoController extends BaseController {
 					sendInfo.setSendAttach(filePath+newFileName+extName);
 				}
 			}
-        }
+		}
+	}
+
+	/**
+	 * 保存寄送信息
+	 * @param sendInfo
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@PostMapping("/save")
+	@RequiresPermissions("send:sendInfo:add")
+	public R save( SendInfoDO sendInfo,HttpServletRequest request)throws Exception{
+		//寄送附件上传
+		uploadAttach(sendInfo,request);
 		//设置创建人和修改人
 		sendInfo.setCreateById(String.valueOf(this.getUserId()));
 		sendInfo.setUpdateById(String.valueOf(this.getUserId()));
@@ -167,12 +179,16 @@ public class SendInfoController extends BaseController {
 	/**
 	 * 修改寄送信息
 	 * @param sendInfo
+	 * @param request
 	 * @return
+	 * @throws Exception
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("send:sendInfo:edit")
-	public R update(SendInfoDO sendInfo){
+	public R update(SendInfoDO sendInfo,HttpServletRequest request)throws Exception{
+		//寄送附件上传
+		uploadAttach(sendInfo,request);
 		//设置修改人
 		sendInfo.setUpdateById(String.valueOf(this.getUserId()));
 		sendInfo.setUpdateBy(this.getUsername());
