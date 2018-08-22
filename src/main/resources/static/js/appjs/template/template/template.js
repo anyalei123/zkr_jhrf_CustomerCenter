@@ -1,4 +1,3 @@
-
 var prefix = "/template/template"
 var typeName;
 $(function() {
@@ -18,6 +17,7 @@ $(function() {
 	load();
 });
 
+//加载列表数据
 function load() {
 	$('#exampleTable')
 			.bootstrapTable(
@@ -47,10 +47,10 @@ function load() {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit: params.limit,
 								offset:params.offset,
-                                templateId:$('#templateId').val(),
-                                templateName:$('#templateName').val(),
-                                typeId:$('#typeId').val(),
-                                templateLanguage:$('#templateLanguage').val()
+                                templateId:$('#templateId').val().trim(),
+                                templateName:$('#templateName').val().trim(),
+                                typeId:$('#typeId').val().trim(),
+                                templateLanguage:$('#templateLanguage').val().trim()
 							};
 						},
 						// //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
@@ -108,20 +108,20 @@ function load() {
 									}
 								},
 								{
-									field : 'createBy', 
-									title : '创建人'
-								},
-								{
 									field : 'createTime',
 									title : '创建时间'
 								},
 								{
-									field : 'updateBy', 
-									title : '修改人'
-								},
-								{
 									field : 'updateTime',
 									title : '修改时间'
+								},
+								{
+									field : 'createBy',
+									title : '创建人'
+								},
+								{
+									field : 'updateBy', 
+									title : '修改人'
 								},
 								{
 									title : '操作',
@@ -142,9 +142,13 @@ function load() {
 								} ]
 					});
 }
+
+//刷新列表
 function reLoad() {
 	$('#exampleTable').bootstrapTable('refresh');
 }
+
+//打开增加窗口
 function add() {
 	layer.open({
 		type : 2,
@@ -155,6 +159,8 @@ function add() {
 		content : prefix + '/add' // iframe的url
 	});
 }
+
+//打开编辑窗口
 function edit(id) {
 	layer.open({
 		type : 2,
@@ -165,6 +171,8 @@ function edit(id) {
 		content : prefix + '/edit/' + id // iframe的url
 	});
 }
+
+//根据id删除
 function remove(id) {
 	layer.confirm('确定要删除选中的记录？', {
 		btn : [ '确定', '取消' ]
@@ -189,6 +197,8 @@ function remove(id) {
 
 function resetPwd(id) {
 }
+
+//批量删除
 function batchRemove() {
 	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
 	if (rows.length == 0) {

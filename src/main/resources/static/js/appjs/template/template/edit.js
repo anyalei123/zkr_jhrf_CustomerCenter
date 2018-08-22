@@ -17,6 +17,7 @@ $().ready(function() {
             })
         }
     });
+
 	//模板语言的回显
     var select = $("#templateLanguage");
     var language = select.val();
@@ -30,19 +31,21 @@ $().ready(function() {
         select.append("<option value='简体中文'>简体中文</option>");
         select.append("<option value='繁体中文'>繁体中文</option>");
 	}
+
     //模板生效时间
     laydate.render({
         elem: '#effectTime' ,//指定元素
         type: 'datetime',//日期时间
         min:  timestr//最小时间
     });
-	//校验规则
+
+	//表单校验
     validateRule();
 });
+//定义最小时间
 var starttime = new Date();
 var timestr = dateFtt("yyyy-MM-dd hh:mm:ss",starttime);
-function dateFtt(fmt,date)
-{ //author: meizz
+function dateFtt(fmt,date) {
     var o = {
         "M+" : date.getMonth()+1,                 //月份
         "d+" : date.getDate(),                    //日
@@ -65,12 +68,14 @@ $.validator.setDefaults({
 		update();
 	}
 });
+
+//提交表单，修改数据
 function update() {
 	$.ajax({
 		cache : true,
 		type : "POST",
 		url : "/template/template/update",
-		data : $('#signupForm').serialize(),// 你的formid
+		data : $('#signupForm').serialize(), //表单序列化
 		async : false,
 		error : function(request) {
 			parent.layer.alert("Connection error");
@@ -78,18 +83,17 @@ function update() {
 		success : function(data) {
 			if (data.code == 0) {
 				parent.layer.msg("操作成功");
-				parent.reLoad();
+				parent.reLoad(); //刷新列表
 				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
 				parent.layer.close(index);
-
 			} else {
 				parent.layer.alert(data.msg)
 			}
-
 		}
 	});
-
 }
+
+//表单校验
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({

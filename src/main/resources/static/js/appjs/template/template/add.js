@@ -5,6 +5,7 @@ $().ready(function() {
         type: 'datetime',//日期时间
         min:  timestr//最小时间
     });
+
 	//选择模板类型
     $.ajax({
         type : "GET",
@@ -18,13 +19,14 @@ $().ready(function() {
             })
         }
     });
-    //校验规则
+
+    //表单校验
 	validateRule();
 });
+//定义最小时间
 var starttime = new Date();
 var timestr = dateFtt("yyyy-MM-dd hh:mm:ss",starttime);
-function dateFtt(fmt,date)
-{ //author: meizz
+function dateFtt(fmt,date) {
     var o = {
         "M+" : date.getMonth()+1,                 //月份
         "d+" : date.getDate(),                    //日
@@ -47,12 +49,14 @@ $.validator.setDefaults({
 		save();
 	}
 });
+
+//提交表单，保存数据
 function save() {
 	$.ajax({
 		cache : true,
 		type : "POST",
 		url : "/template/template/save",
-		data : $('#signupForm').serialize(),// 你的formid
+		data : $('#signupForm').serialize(), //表单序列化
 		async : false,
 		error : function(request) {
 			parent.layer.alert("Connection error");
@@ -60,18 +64,17 @@ function save() {
 		success : function(data) {
 			if (data.code == 0) {
 				parent.layer.msg("操作成功");
-				parent.reLoad();
+				parent.reLoad(); //刷新列表
 				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
 				parent.layer.close(index);
-
 			} else {
 				parent.layer.alert(data.msg)
 			}
-
 		}
 	});
-
 }
+
+//表单校验
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
