@@ -97,15 +97,35 @@ function update() {
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
-		rules : {
-			name : {
-				required : true
-			}
-		},
-		messages : {
-			name : {
-				required : icon + "请输入名字"
-			}
+        rules : {
+            templateName : {
+                required : true
+            },
+            templateContent : {
+                required : true
+            },
+            templateVersion : {
+                required : true
+            },
+            typeId : {
+                required : true,
+                min : 0
+            }
+        },
+        messages : {
+            templateName : {
+                required : icon + "请输入模板名称"
+            },
+            templateContent : {
+                required : icon + "请输入模板内容"
+            },
+            templateVersion : {
+                required : icon + "请输入模板版本"
+            },
+            typeId : {
+                required : icon + "请选择模板类型",
+                min : icon+"请选择模板类型"
+            }
 		}
 	})
 }
