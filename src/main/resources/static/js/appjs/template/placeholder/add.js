@@ -39,14 +39,26 @@ function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
 		rules : {
-			name : {
+            placeholderCode : { //占位符代码
 				required : true
-			}
+			},
+            placeholderName : { //名称
+                required : true
+            },
+            placeholderType : { //类型
+                required : true
+            }
 		},
 		messages : {
-			name : {
-				required : icon + "请输入姓名"
-			}
+            placeholderCode : {
+				required : icon + "请输入占位符代码"
+			},
+            placeholderName : {
+                required : icon + "请输入占位符名称"
+            },
+            placeholderType : {
+                required : icon + "请输入占位符类型"
+            }
 		}
 	})
 }
