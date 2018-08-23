@@ -1,9 +1,11 @@
 package com.bootdo.template.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import com.bootdo.common.controller.BaseController;
+import com.bootdo.common.utils.GenerateSequenceUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -95,11 +97,20 @@ public class PlaceholderController extends BaseController {
 	@PostMapping("/save")
 	@RequiresPermissions("template:placeholder:add")
 	public R save( PlaceholderDO placeholder){
+		//设置主键
+		placeholder.setPlaceholderId(GenerateSequenceUtil.generateSequenceNo());
+		//设置创建时间和修改时间为当前时间
+		placeholder.setCreateTime(new Date());
+		placeholder.setUpdateTime(new Date());
 		//设置创建人和修改人
         placeholder.setCreateById(String.valueOf(this.getUserId()));
         placeholder.setUpdateById(String.valueOf(this.getUserId()));
 		placeholder.setCreateBy(this.getUsername());
 		placeholder.setUpdateBy(this.getUsername());
+		//去除空格
+		placeholder.setPlaceholderCode(placeholder.getPlaceholderCode().trim());
+		placeholder.setPlaceholderName(placeholder.getPlaceholderName().trim());
+		placeholder.setPlaceholderType(placeholder.getPlaceholderType().trim());
 		//保存成功
 		if(placeholderService.save(placeholder)>0){
 			return R.ok();
@@ -117,9 +128,15 @@ public class PlaceholderController extends BaseController {
 	@RequestMapping("/update")
 	@RequiresPermissions("template:placeholder:edit")
 	public R update( PlaceholderDO placeholder){
+		//设置修改时间为当前时间
+		placeholder.setUpdateTime(new Date());
 		//设置修改人
 		placeholder.setUpdateById(String.valueOf(this.getUserId()));
 		placeholder.setUpdateBy(this.getUsername());
+		//去除空格
+		placeholder.setPlaceholderCode(placeholder.getPlaceholderCode().trim());
+		placeholder.setPlaceholderName(placeholder.getPlaceholderName().trim());
+		placeholder.setPlaceholderType(placeholder.getPlaceholderType().trim());
 		//修改成功
 		if(placeholderService.update(placeholder)>0){
 			return R.ok();

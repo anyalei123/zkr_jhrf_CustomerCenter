@@ -1,9 +1,11 @@
 package com.bootdo.template.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import com.bootdo.common.controller.BaseController;
+import com.bootdo.common.utils.GenerateSequenceUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -122,11 +124,18 @@ public class TemplateTypeController extends BaseController {
 	@PostMapping("/save")
 	@RequiresPermissions("template:templateType:add")
 	public R save( TemplateTypeDO templateType){
+		//设置主键
+		templateType.setTypeId(GenerateSequenceUtil.generateSequenceNo());
+		//设置创建时间和修改时间为当前时间
+		templateType.setCreateTime(new Date());
+		templateType.setUpdateTime(new Date());
 		//设置创建人和修改人
 		templateType.setCreateById(String.valueOf(this.getUserId()));
 		templateType.setUpdateById(String.valueOf(this.getUserId()));
 		templateType.setCreateBy(this.getUsername());
 		templateType.setUpdateBy(this.getUsername());
+		//去除空格
+		templateType.setTypeName(templateType.getTypeName().trim());
 		//保存成功
 		if(templateTypeService.save(templateType)>0){
 			return R.ok();
@@ -144,9 +153,13 @@ public class TemplateTypeController extends BaseController {
 	@RequestMapping("/update")
 	@RequiresPermissions("template:templateType:edit")
 	public R update( TemplateTypeDO templateType){
+		//设置修改时间为当前时间
+		templateType.setUpdateTime(new Date());
 		//设置修改人
 		templateType.setUpdateById(String.valueOf(this.getUserId()));
 		templateType.setUpdateBy(this.getUsername());
+		//去除空格
+		templateType.setTypeName(templateType.getTypeName().trim());
 		//修改成功
 		if(templateTypeService.update(templateType)>0){
 			return R.ok();
