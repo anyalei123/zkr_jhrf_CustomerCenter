@@ -62,11 +62,6 @@ public class PlaceholderServiceImpl implements PlaceholderService {
 	 */
 	@Override
 	public int save(PlaceholderDO placeholder){
-		//设置主键
-		placeholder.setPlaceholderId(GenerateSequenceUtil.generateSequenceNo());
-        //设置创建时间和修改时间为当前时间
-		placeholder.setCreateTime(new Date());
-		placeholder.setUpdateTime(new Date());
 		return placeholderDao.save(placeholder);
 	}
 
@@ -77,8 +72,6 @@ public class PlaceholderServiceImpl implements PlaceholderService {
 	 */
 	@Override
 	public int update(PlaceholderDO placeholder){
-		//设置修改时间为当前时间
-		placeholder.setUpdateTime(new Date());
 		return placeholderDao.update(placeholder);
 	}
 

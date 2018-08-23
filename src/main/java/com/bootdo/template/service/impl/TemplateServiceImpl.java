@@ -62,11 +62,6 @@ public class TemplateServiceImpl implements TemplateService {
 	 */
 	@Override
 	public int save(TemplateDO template){
-		//设置主键
-		template.setTemplateId(GenerateSequenceUtil.generateSequenceNo());
-		//设置创建时间和修改时间为当前时间
-		template.setCreateTime(new Date());
-		template.setUpdateTime(new Date());
 		return templateDao.save(template);
 	}
 
@@ -77,8 +72,6 @@ public class TemplateServiceImpl implements TemplateService {
 	 */
 	@Override
 	public int update(TemplateDO template){
-		//设置修改时间为当前时间
-		template.setUpdateTime(new Date());
 		return templateDao.update(template);
 	}
 
