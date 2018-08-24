@@ -167,7 +167,8 @@ function batchRemove() {
 		$.ajax({
 			type : 'POST',
 			data : {
-				"ids" : ids
+				"ids" : ids,
+				"selectRows" : rows.length
 			},
 			url : prefix + '/batchRemove',
 			success : function(r) {
@@ -176,6 +177,7 @@ function batchRemove() {
 					reLoad();
 				} else {
 					layer.msg(r.msg);
+                    reLoad();
 				}
 			}
 		});
