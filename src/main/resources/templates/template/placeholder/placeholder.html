@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<div class="columns pull-left">
+							<button shiro:hasPermission="template:placeholder:add" type="button" class="btn  btn-primary" onclick="add()">
+								<i class="fa fa-plus" aria-hidden="true"></i>添加
+							</button>
+							<button shiro:hasPermission="template:placeholder:batchRemove" type="button" class="btn  btn-danger"
+								onclick="batchRemove()">
+								<i class="fa fa-trash" aria-hidden="true"></i>删除
+							</button>
+						</div>
+						<div class="columns pull-right">
+							<button class="btn btn-success" onclick="reLoad()">查询</button>
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							类型：<input id="placeholderType" type="text" class="form-control"
+								placeholder="占位符类型">
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+							名称：<input id="placeholderName" type="text" class="form-control"
+								   placeholder="占位符名称">
+						</div>
+						<div class="columns pull-right col-md-2 nopadding">
+						    代码：<input id="placeholderCode" type="text" class="form-control"
+									 placeholder="占位符代码">
+					    </div>
+						<div class="columns pull-right col-md-2 nopadding">
+							占位符编号：<input id="placeholderId" type="text" class="form-control"
+										 placeholder="占位符编号">
+						</div>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true">
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--shiro控制bootstraptable行内按钮看见性 -->
+		<div>
+			<script type="text/javascript">
+				var s_edit_h = 'hidden';
+				var s_remove_h = 'hidden';
+				// var s_resetPwd_h = 'hidden';
+			</script>
+		</div>
+		<div shiro:hasPermission="template:placeholder:edit">
+			<script type="text/javascript">
+				s_edit_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="template:placeholder:remove">
+			<script type="text/javascript">
+				var s_remove_h = '';
+			</script>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript" src="/js/appjs/template/placeholder/placeholder.js"></script>
+</body>
+</html>
