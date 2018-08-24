@@ -1,5 +1,18 @@
 $().ready(function() {
 	validateRule();
+	//查询字典类型下拉选项
+    $.ajax({
+        type : "GET",
+        url : "/config/dictionaryType/listType",
+        dataType : "json",
+        async : false,
+        success : function(data) {
+            var select = $("#typeId");
+            $(data).each(function (index, type) {
+                select.append("<option value="+type.typeId+">"+type.typeName+"</option>");
+            })
+        }
+    });
 });
 
 $.validator.setDefaults({
