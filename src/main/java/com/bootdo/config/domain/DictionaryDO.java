@@ -1,6 +1,7 @@
 package com.bootdo.config.domain;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -45,6 +46,22 @@ public class DictionaryDO implements Serializable {
 	private String createBy;
 	//修改人
 	private String updateBy;
+
+	/**
+	 * 格式化创建时间
+	 * @return
+	 */
+	public String getCreateTimeString(){
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(createTime);
+	}
+
+	/**
+	 * 格式化修改时间
+	 * @return
+	 */
+	public String getUpdateTimeString(){
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(updateTime);
+	}
 
 	/**
 	 * 设置：字典编号
