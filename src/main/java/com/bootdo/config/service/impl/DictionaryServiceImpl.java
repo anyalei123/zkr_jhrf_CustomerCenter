@@ -1,5 +1,6 @@
 package com.bootdo.config.service.impl;
 
+import com.bootdo.config.dao.self.ConfigSelfDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +15,12 @@ import com.bootdo.config.service.DictionaryService;
 
 @Service
 public class DictionaryServiceImpl implements DictionaryService {
+
 	@Autowired
 	private DictionaryDao dictionaryDao;
+
+	@Autowired
+	private ConfigSelfDao configSelfDao;
 	
 	@Override
 	public DictionaryDO get(String dictId){
@@ -50,6 +55,16 @@ public class DictionaryServiceImpl implements DictionaryService {
 	@Override
 	public int batchRemove(String[] dictIds){
 		return dictionaryDao.batchRemove(dictIds);
+	}
+
+	/**
+	 * 通过字典名称查询字典对象
+	 * @param dictionaryDO
+	 * @return
+	 */
+	@Override
+	public DictionaryDO getByDictName(DictionaryDO dictionaryDO){
+		return configSelfDao.getByDictName(dictionaryDO);
 	}
 	
 }
