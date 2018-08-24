@@ -1,6 +1,21 @@
 
 var prefix = "/config/dictionary"
 $(function() {
+    //选择字典类型
+    $.ajax({
+        type : "GET",
+        url : "/config/dictionaryType/listType",
+        dataType : "json",
+        async : false,
+        success : function(data) {
+            var select = $("#typeId");
+            if(data != null){
+                $(data).each(function (index, type) {
+                    select.append("<option value="+type.typeId+">"+type.typeName+"</option>");
+                })
+			}
+        }
+    });
 	load();
 });
 
@@ -32,9 +47,10 @@ function load() {
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit: params.limit,
-								offset:params.offset
-					           // name:$('#searchName').val(),
-					           // username:$('#searchName').val()
+								offset:params.offset,
+                                typeId:$('#typeId').val().trim(),
+                                dictName:$('#dictName').val().trim(),
+                                dictValue:$("#dictValue").val().trim()
 							};
 						},
 						// //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
@@ -47,31 +63,44 @@ function load() {
 								{
 									checkbox : true
 								},
-																{
+								{
 									field : 'dictId', 
 									title : '字典ID' 
 								},
-																{
+								{
 									field : 'typeId', 
-									title : '字典类型' 
+									title : '字典类型',
+                                    formatter : function format(value,row,index){
+										var typeName;
+                                        $.ajax({
+                                            type : "GET",
+                                            url : "/config/dictionaryType/get/"+value,
+                                            dataType : "json",
+                                            async : false,
+                                            success : function(data) {
+                                                typeName = data.typeName;
+                                            }
+                                        });
+                                        return typeName;
+                                    }
 								},
-																{
+								{
 									field : 'dictName', 
 									title : '字典名称' 
 								},
-																{
+								{
 									field : 'dictValue', 
 									title : '字典数据值' 
 								},
-																{
+								{
 									field : 'dictDesc', 
 									title : '字典描述' 
 								},
-																{
+								{
 									field : 'dictSort', 
 									title : '排序优先级' 
 								},
-																{
+								{
 									title : '操作',
 									field : 'id',
 									align : 'center',
@@ -81,9 +110,9 @@ function load() {
 												+ '\')"><i class="fa fa-edit"></i></a> ';
 										var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
 												+ row.dictId
-												+ '\')"><i class="fa fa-edit"></i></a> ';
+												+ '\')"><i class="fa fa-remove"></i></a> ';
 										var f = '<a class="btn btn-success btn-sm'+s_showDetail_h+'" href="#" title="查看详情"  mce_href="#" onclick="showDetial(\''
-										        + row.typeId
+										        + row.dictId
 										        + '\')"><i class="fa fa-hand-peace-o"></i></a> ';
 										return e + d + f ;
 									}
@@ -95,7 +124,7 @@ function reLoad() {
 }
 
 /*
- * 查看字典类型详情
+ * 查看字典详情
  */
 function showDetial(id) {
 	layer.open({
@@ -110,7 +139,6 @@ function showDetial(id) {
 
 
 function add() {
-	
 	layer.open({
 		type : 2,
 		title : '增加',
@@ -119,38 +147,7 @@ function add() {
 		area : [ '800px', '520px' ],
 		content : prefix + '/add' // iframe的url
 	});
-	selectLoad();//查询字典类型下拉框
 }
-/*
- * 查询字典类型
- */
-function selectLoad() {
-    var html = "";
-    $.ajax({
-        url : '/common/dict/type',
-        success : function(data) {
-            //加载数据
-            for (var i = 0; i < data.length; i++) {
-                html += '<option value="' + data[i].type + '">' + data[i].description + '</option>'
-            }
-            $(".chosen-select").append(html);
-            $(".chosen-select").chosen({
-                maxHeight : 200
-            });
-            //点击事件
-            $('.chosen-select').on('change', function(e, params) {
-                console.log(params.selected);
-                var opt = {
-                    query : {
-                        type : params.selected,
-                    }
-                }
-                $('#exampleTable').bootstrapTable('refresh', opt);
-            });
-        }
-    });
-}
-
 
 function edit(id) {
 	layer.open({
