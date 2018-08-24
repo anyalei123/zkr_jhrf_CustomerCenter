@@ -15,8 +15,7 @@ import com.bootdo.config.service.DictionaryTypeService;
 
 @Service
 public class DictionaryTypeServiceImpl implements DictionaryTypeService {
-	
-	
+
 	@Autowired
 	private DictionaryTypeDao dictionaryTypeDao;
 	
@@ -57,6 +56,7 @@ public class DictionaryTypeServiceImpl implements DictionaryTypeService {
 	public int batchRemove(String[] typeIds){
 		return dictionaryTypeDao.batchRemove(typeIds);
 	}
+
 	/**
 	 * 通过字典类型名称查询对象
 	 * @param
@@ -67,6 +67,35 @@ public class DictionaryTypeServiceImpl implements DictionaryTypeService {
 	@Override
 	public DictionaryTypeDO getByTypeName(DictionaryTypeDO dictionaryType) {
 		return configSelfDao.getByTypeName(dictionaryType);
+	}
+
+	/**
+	 * 查询字典类型下拉选项
+	 * @return
+	 */
+	@Override
+	public List<DictionaryTypeDO> listType(){
+        return configSelfDao.listType();
+	}
+
+	/**
+	 * 根据id删除字典类型，若该类型下有数据，类型不能删除
+	 * @param typeId
+	 * @return
+	 */
+	@Override
+	public int removeById(String typeId){
+		return configSelfDao.removeById(typeId);
+	}
+
+	/**
+	 * 批量删除字典类型，若该类型有数据，类型不能删除
+	 * @param typeIds
+	 * @return
+	 */
+	@Override
+	public int batchRemove1(String[] typeIds){
+		return configSelfDao.batchRemove1(typeIds);
 	}
 	
 }
