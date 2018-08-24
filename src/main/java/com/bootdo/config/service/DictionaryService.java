@@ -13,6 +13,13 @@ import java.util.Map;
  * @date 2018-08-21 16:11:18
  */
 public interface DictionaryService {
+
+	/**
+	 * 通过字典名称查询字典对象
+	 * @param dictionaryDO
+	 * @return
+	 */
+	DictionaryDO getByDictName(DictionaryDO dictionaryDO);
 	
 	DictionaryDO get(String dictId);
 	
