@@ -1,8 +1,11 @@
 package com.bootdo.config.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.bootdo.common.controller.BaseController;
+import com.bootdo.common.utils.GenerateSequenceUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -31,7 +34,7 @@ import com.bootdo.common.utils.R;
  
 @Controller
 @RequestMapping("/config/dictionary")
-public class DictionaryController {
+public class DictionaryController extends BaseController {
 	@Autowired
 	private DictionaryService dictionaryService;
 	
@@ -74,6 +77,26 @@ public class DictionaryController {
 	@PostMapping("/save")
 	@RequiresPermissions("config:dictionary:add")
 	public R save( DictionaryDO dictionary){
+        //判断字典名称是否存在
+		DictionaryDO dictionary1 = dictionaryService.getByDictName(dictionary);
+		if(dictionary1 != null){
+			return R.error("字典名称  '"+dictionary1.getDictName()+"' 已经存在,请勿重复创建!");
+		}
+		//设置主键
+		dictionary.setDictId(GenerateSequenceUtil.generateSequenceNo());
+		//设置创建人修改人信息
+		dictionary.setCreateById(String.valueOf(this.getUserId()));
+		dictionary.setCreateBy(this.getUsername());
+		dictionary.setUpdateById(String.valueOf(this.getUserId()));
+		dictionary.setUpdateBy(this.getUsername());
+		//设置创建时间修改时间
+		dictionary.setCreateTime(new Date());
+		dictionary.setUpdateTime(new Date());
+		//设置删除标记（0：未删除，1：已删除）
+		dictionary.setDelFlag("0");
+		//去除空格
+		dictionary.setDictName(dictionary.getDictName().trim());
+		dictionary.setDictValue(dictionary.getDictValue().trim());
 		if(dictionaryService.save(dictionary)>0){
 			return R.ok();
 		}
@@ -86,6 +109,20 @@ public class DictionaryController {
 	@RequestMapping("/update")
 	@RequiresPermissions("config:dictionary:edit")
 	public R update( DictionaryDO dictionary){
+		//判断字典名称是否存在
+		DictionaryDO dictionary1 = dictionaryService.getByDictName(dictionary);
+		if(dictionary1 != null && !dictionary1.getDictId().equals(dictionary.getDictId())){
+			return R.error("字典名称  '"+dictionary1.getDictName()+"' 已经存在,请勿重复创建!");
+		}
+        //设置修改人信息
+		dictionary.setUpdateById(String.valueOf(this.getUserId()));
+		dictionary.setUpdateBy(this.getUsername());
+        //设置修改时间
+		dictionary.setUpdateTime(new Date());
+		//去除空格
+		dictionary.setDictName(dictionary.getDictName().trim());
+		dictionary.setDictValue(dictionary.getDictValue().trim());
+
 		dictionaryService.update(dictionary);
 		return R.ok();
 	}
@@ -124,7 +161,5 @@ public class DictionaryController {
 		model.addAttribute("dictionary",dictionaryDO);
 		return "config/dictionary/showDetail";
 	}
-	
-	
-	
+
 }
