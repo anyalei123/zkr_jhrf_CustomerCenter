@@ -31,13 +31,6 @@ public interface TemplateTypeDao {
 	List<TemplateTypeDO> list(Map<String, Object> map);
 
 	/**
-	 * 查询模板类型列表数据
-	 * 将模板类型名称展示到模板添加页面的模板类型下拉选项中
-	 * @return
-	 */
-	List<TemplateTypeDO> listJson();
-
-	/**
 	 * 查询模板类型列表数据总条数
 	 * @param map
 	 * @return
