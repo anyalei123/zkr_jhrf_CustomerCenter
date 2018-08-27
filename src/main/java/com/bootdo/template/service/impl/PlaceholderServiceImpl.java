@@ -1,6 +1,7 @@
 package com.bootdo.template.service.impl;
 
 import com.bootdo.common.utils.GenerateSequenceUtil;
+import com.bootdo.template.dao.self.TemplateSelfDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,9 @@ public class PlaceholderServiceImpl implements PlaceholderService {
 
 	@Autowired
 	private PlaceholderDao placeholderDao;
+
+	@Autowired
+	private TemplateSelfDao templateSelfDao;
 
 	/**
 	 * 根据占位符id查询占位符
@@ -93,6 +97,16 @@ public class PlaceholderServiceImpl implements PlaceholderService {
 	@Override
 	public int batchRemove(String[] placeholderIds){
 		return placeholderDao.batchRemove(placeholderIds);
+	}
+
+	/**
+	 * 通过占位符名称查询占位符对象
+	 * @param placeholder
+	 * @return
+	 */
+	@Override
+	public PlaceholderDO getByPlaceholderName(PlaceholderDO placeholder){
+		return templateSelfDao.getByPlaceholderName(placeholder);
 	}
 	
 }

@@ -4,7 +4,7 @@ $(function() {
     //选择模板类型
     $.ajax({
         type : "GET",
-        url : "/template/templateType/listJson",
+        url : "/template/templateType/listType",
         dataType : "json",
         async : false,
         success : function(data) {
@@ -134,10 +134,10 @@ function load() {
 										var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
 												+ row.templateId
 												+ '\')"><i class="fa fa-remove"></i></a> ';
-										var f = '<a class="btn btn-success btn-sm" href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
+										var f = '<a class="btn btn-success btn-sm '+s_showDetail_h+'" href="#" title="查看详情"  mce_href="#" onclick="showDetail(\''
 												+ row.templateId
-												+ '\')"><i class="fa fa-key"></i></a> ';
-										return e + d ;
+												+ '\')"><i class="fa fa-hand-peace-o"></i></a> ';
+										return e + d +f ;
 									}
 								} ]
 					});
@@ -146,6 +146,18 @@ function load() {
 //刷新列表
 function reLoad() {
 	$('#exampleTable').bootstrapTable('refresh');
+}
+
+//查看详情
+function showDetail(id) {
+    layer.open({
+        type : 2,
+        title : '查看详情',
+        maxmin : true,
+        shadeClose : false, // 点击遮罩关闭层
+        area : [ '800px', '520px' ],
+        content : prefix + '/showDetail/' + id // iframe的url
+    });
 }
 
 //打开增加窗口

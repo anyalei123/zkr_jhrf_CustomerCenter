@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" id="signupForm">
+                        <input id="templateId" name="templateId" th:value="${template.templateId}"  type="hidden">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">名称：</label>
+                            <div class="col-sm-8">
+                                <input id="templateName" name="templateName" readonly th:value="${template.templateName}" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">语言：</label>
+                            <div class="col-sm-8">
+                                <input id="templateLanguage" name="templateLanguage" readonly th:value="${template.templateLanguage}" class="form-control" type="text" >
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">内容：</label>
+                            <div class="col-sm-8">
+                                <textarea id="templateContent" name="templateContent" readonly th:text="${template.templateContent}" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">版本：</label>
+                            <div class="col-sm-8">
+                                <input id="templateVersion" name="templateVersion" readonly th:value="${template.templateVersion}" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">生效时间：</label>
+                            <div class="col-sm-8">
+                                <input id="effectTime" name="effectTime" th:value="${template.effectTimeString}" class="form-control" type="text"
+                                       readonly placeholder="请选择生效时间">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">备注：</label>
+                            <div class="col-sm-8">
+                                <textarea id="remarks" name="remarks" readonly th:text="${template.remarks}" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">类型：</label>
+                            <div class="col-sm-8">
+                                <input id="typeId" name="typeId" readonly th:value="${template.typeId}" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">创建时间：</label>
+                            <div class="col-sm-8">
+                                <input id="createTime" name="createTime" readonly th:value="${template.createTimeString}" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">修改时间：</label>
+                            <div class="col-sm-8">
+                                <input id="updateTime" name="updateTime" readonly th:value="${template.updateTimeString}" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">创建人：</label>
+                            <div class="col-sm-8">
+                                <input id="createBy" name="createBy" readonly th:value="${template.createBy}" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">修改人：</label>
+                            <div class="col-sm-8">
+                                <input id="updateBy" name="updateBy" readonly th:value="${template.updateBy}" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-3">
+                                <button type="submit" class="btn btn-primary" onclick="back();">返回</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript">
+    $(function(){
+        //模板类型的格式化
+        var typeId = $("#typeId").val();
+        $.ajax({
+            type : "GET",
+            url : "/template/templateType/get/"+typeId,
+            dataType : "json",
+            async : false,
+            success : function(data) {
+                $("#typeId").val(data.typeName);
+            }
+        });
+    });
+    function back() {
+        var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+        parent.layer.close(index);
+    }
+</script>
+</body>
+</html>

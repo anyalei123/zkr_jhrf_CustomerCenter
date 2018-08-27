@@ -28,13 +28,6 @@ public interface TemplateTypeService {
 	List<TemplateTypeDO> list(Map<String, Object> map);
 
 	/**
-	 * 查询模板类型列表数据
-	 * 将模板类型名称展示到模板添加页面的模板类型下拉选项中
-	 * @return
-	 */
-	List<TemplateTypeDO> listJson();
-
-	/**
 	 * 查询模板类型列表数据总条数
 	 * @param map
 	 * @return
@@ -68,4 +61,18 @@ public interface TemplateTypeService {
 	 * @return
 	 */
 	int batchRemove(String[] typeIds);
+
+	/**
+	 * 查询模板类型列表数据
+	 * 将模板类型名称展示到模板添加页面的模板类型下拉选项中
+	 * @return
+	 */
+	List<TemplateTypeDO> listType();
+
+	/**
+	 * 通过模板类型名称查询模板类型对象
+	 * @param templateType
+	 * @return
+	 */
+	TemplateTypeDO getByTypeName(TemplateTypeDO templateType);
 }

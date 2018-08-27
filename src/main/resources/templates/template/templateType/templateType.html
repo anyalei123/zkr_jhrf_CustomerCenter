@@ -41,7 +41,7 @@
 			<script type="text/javascript">
 				var s_edit_h = 'hidden';
 				var s_remove_h = 'hidden';
-				// var s_resetPwd_h = 'hidden';
+				var s_showDetail_h = 'hidden';
 			</script>
 		</div>
 		<div shiro:hasPermission="template:templateType:edit">
@@ -52,6 +52,11 @@
 		<div shiro:hasPermission="template:templateType:remove">
 			<script type="text/javascript">
 				var s_remove_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="template:templateType:templateType">
+			<script type="text/javascript">
+				var s_showDetail_h = '';
 			</script>
 		</div>
 	</div>

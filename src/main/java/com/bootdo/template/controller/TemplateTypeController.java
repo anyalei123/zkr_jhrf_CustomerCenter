@@ -64,33 +64,6 @@ public class TemplateTypeController extends BaseController {
 	}
 
 	/**
-	 * 查询模板类型列表数据
-	 * 将模板类型名称展示到模板添加页面的模板类型下拉选项中
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping("/listJson")
-	@RequiresPermissions("template:templateType:templateType")
-	public List<TemplateTypeDO> listJson(){
-		List<TemplateTypeDO> templateTypeList = templateTypeService.listJson();
-		return templateTypeList;
-	}
-
-	/**
-	 * 根据id查询模板类型
-	 * 用于模板列表中模板类型的格式化
-	 * @param typeId
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping("/get/{typeId}")
-	@RequiresPermissions("template:templateType:templateType")
-	public TemplateTypeDO get(@PathVariable String typeId){
-		TemplateTypeDO templateType = templateTypeService.get(typeId);
-		return templateType;
-	}
-
-	/**
 	 * 到模板类型添加页面
 	 * @return
 	 */
@@ -124,6 +97,11 @@ public class TemplateTypeController extends BaseController {
 	@PostMapping("/save")
 	@RequiresPermissions("template:templateType:add")
 	public R save( TemplateTypeDO templateType){
+		//判断模板类型名称是否存在
+		TemplateTypeDO templateType1 = templateTypeService.getByTypeName(templateType);
+		if(templateType1 != null){
+			return R.error("模板类型名称  '"+templateType1.getTypeName()+"' 已经存在,请勿重复创建!");
+		}
 		//设置主键
 		templateType.setTypeId(GenerateSequenceUtil.generateSequenceNo());
 		//设置创建时间和修改时间为当前时间
@@ -153,6 +131,11 @@ public class TemplateTypeController extends BaseController {
 	@RequestMapping("/update")
 	@RequiresPermissions("template:templateType:edit")
 	public R update( TemplateTypeDO templateType){
+		//判断模板类型名称是否存在
+		TemplateTypeDO templateType1 = templateTypeService.getByTypeName(templateType);
+		if(templateType1 != null && !templateType1.getTypeId().equals(templateType.getTypeId())){
+			return R.error("模板类型名称  '"+templateType1.getTypeName()+"' 已经存在,请勿重复创建!");
+		}
 		//设置修改时间为当前时间
 		templateType.setUpdateTime(new Date());
 		//设置修改人
@@ -182,7 +165,7 @@ public class TemplateTypeController extends BaseController {
 			return R.ok();
 		}
 		//删除失败
-		return R.error("该类型下有模板，不能删除");
+		return R.error("该类型下有模板，不能删除！");
 	}
 
 	/**
@@ -202,7 +185,49 @@ public class TemplateTypeController extends BaseController {
 		}
         //删除失败的条数
 		int errorRows = selectRows - removeRows;
-		return R.error(errorRows+"条数据删除失败，失败原因：类型下有模板，类型不能删除");
+		return R.error(errorRows+"条数据删除失败，失败原因：类型下有模板，类型不能删除！");
+	}
+
+	/**
+	 * 查询模板类型列表数据
+	 * 将模板类型名称展示到模板添加页面的模板类型下拉选项中
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/listType")
+	@RequiresPermissions("template:templateType:templateType")
+	public List<TemplateTypeDO> listType(){
+		List<TemplateTypeDO> templateTypeList = templateTypeService.listType();
+		return templateTypeList;
+	}
+
+	/**
+	 * 根据id查询模板类型
+	 * 用于模板列表中模板类型的格式化
+	 * @param typeId
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/get/{typeId}")
+	@RequiresPermissions("template:templateType:templateType")
+	public TemplateTypeDO get(@PathVariable String typeId){
+		TemplateTypeDO templateType = templateTypeService.get(typeId);
+		return templateType;
+	}
+
+	/**
+	 * 查看详情页面
+	 * @param typeId
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/showDetail/{typeId}")
+	@RequiresPermissions("template:templateType:templateType")
+	String showDetail(@PathVariable("typeId") String typeId,Model model){
+		//根据id查询模板类型
+		TemplateTypeDO templateType = templateTypeService.get(typeId);
+		model.addAttribute("templateType", templateType);
+		return "template/templateType/showDetail";
 	}
 	
 }

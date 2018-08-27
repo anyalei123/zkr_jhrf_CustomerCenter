@@ -97,6 +97,11 @@ public class TemplateController extends BaseController {
 	@PostMapping("/save")
 	@RequiresPermissions("template:template:add")
 	public R save( TemplateDO template){
+		//判断模板名称是否存在
+		TemplateDO template1 = templateService.getByTemplateName(template);
+		if(template1 != null){
+			return R.error("模板名称  '"+template1.getTemplateName()+"' 已经存在,请勿重复创建!");
+		}
 		//设置主键
 		template.setTemplateId(GenerateSequenceUtil.generateSequenceNo());
 		//设置创建时间和修改时间为当前时间
@@ -127,6 +132,11 @@ public class TemplateController extends BaseController {
 	@RequestMapping("/update")
 	@RequiresPermissions("template:template:edit")
 	public R update( TemplateDO template){
+		//判断模板名称是否存在
+		TemplateDO template1 = templateService.getByTemplateName(template);
+		if(template1 != null && !template1.getTemplateId().equals(template.getTemplateId())){
+			return R.error("模板名称  '"+template1.getTemplateName()+"' 已经存在,请勿重复创建!");
+		}
 		//设置修改时间为当前时间
 		template.setUpdateTime(new Date());
 		//设置修改人
@@ -175,6 +185,21 @@ public class TemplateController extends BaseController {
 		}
 		//批量删除失败
 		return R.error();
+	}
+
+	/**
+	 * 查看详情页面
+	 * @param templateId
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/showDetail/{templateId}")
+	@RequiresPermissions("template:template:template")
+	String showDetail(@PathVariable("templateId") String templateId,Model model){
+		//根据模板id查询模板
+		TemplateDO template = templateService.get(templateId);
+		model.addAttribute("template", template);
+		return "template/template/showDetail";
 	}
 	
 }

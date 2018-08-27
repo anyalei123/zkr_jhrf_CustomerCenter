@@ -1,6 +1,7 @@
 package com.bootdo.template.service.impl;
 
 import com.bootdo.common.utils.GenerateSequenceUtil;
+import com.bootdo.template.dao.self.TemplateSelfDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,9 @@ public class TemplateServiceImpl implements TemplateService {
 
 	@Autowired
 	private TemplateDao templateDao;
+
+	@Autowired
+	private TemplateSelfDao templateSelfDao;
 
 	/**
 	 * 根据模板id查询模板
@@ -93,6 +97,16 @@ public class TemplateServiceImpl implements TemplateService {
 	@Override
 	public int batchRemove(String[] templateIds){
 		return templateDao.batchRemove(templateIds);
+	}
+
+	/**
+	 * 通过模板名称查询模板对象
+	 * @param template
+	 * @return
+	 */
+	@Override
+	public TemplateDO getByTemplateName(TemplateDO template){
+		return templateSelfDao.getByTemplateName(template);
 	}
 	
 }

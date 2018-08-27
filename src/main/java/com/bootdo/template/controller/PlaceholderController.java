@@ -97,6 +97,11 @@ public class PlaceholderController extends BaseController {
 	@PostMapping("/save")
 	@RequiresPermissions("template:placeholder:add")
 	public R save( PlaceholderDO placeholder){
+		//判断占位符名称是否存在
+		PlaceholderDO placeholder1 = placeholderService.getByPlaceholderName(placeholder);
+		if(placeholder1 != null){
+			return R.error("占位符名称  '"+placeholder1.getPlaceholderName()+"' 已经存在,请勿重复创建!");
+		}
 		//设置主键
 		placeholder.setPlaceholderId(GenerateSequenceUtil.generateSequenceNo());
 		//设置创建时间和修改时间为当前时间
@@ -128,6 +133,11 @@ public class PlaceholderController extends BaseController {
 	@RequestMapping("/update")
 	@RequiresPermissions("template:placeholder:edit")
 	public R update( PlaceholderDO placeholder){
+		//判断占位符名称是否存在
+		PlaceholderDO placeholder1 = placeholderService.getByPlaceholderName(placeholder);
+		if(placeholder1 != null && !placeholder1.getPlaceholderId().equals(placeholder.getPlaceholderId())){
+			return R.error("占位符名称  '"+placeholder1.getPlaceholderName()+"' 已经存在,请勿重复创建!");
+		}
 		//设置修改时间为当前时间
 		placeholder.setUpdateTime(new Date());
 		//设置修改人
@@ -177,6 +187,21 @@ public class PlaceholderController extends BaseController {
 		}
 		//批量删除失败
 		return R.error();
+	}
+
+	/**
+	 * 查看详情页面
+	 * @param placeholderId
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/showDetail/{placeholderId}")
+	@RequiresPermissions("template:placeholder:placeholder")
+	String showDetail(@PathVariable("placeholderId") String placeholderId,Model model){
+		//根据占位符id查询占位符
+		PlaceholderDO placeholder = placeholderService.get(placeholderId);
+		model.addAttribute("placeholder", placeholder);
+		return "template/placeholder/showDetail";
 	}
 	
 }

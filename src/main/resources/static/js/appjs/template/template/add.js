@@ -9,7 +9,7 @@ $().ready(function() {
 	//选择模板类型
     $.ajax({
         type : "GET",
-        url : "/template/templateType/listJson",
+        url : "/template/templateType/listType",
         dataType : "json",
         async : false,
         success : function(data) {

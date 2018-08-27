@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.template.dao.self.TemplateSelfDao">
+
+    <!--查询模板类型列表数据，将模板类型名称展示到模板添加页面的模板类型下拉选项中-->
+    <select id="listType" resultType="com.bootdo.template.domain.TemplateTypeDO">
+        select `type_id`,`type_name`,`type_desc`,`create_time`,`update_time`,`create_by_id`,`update_by_id`,`create_by`,`update_by` from mb_template_type
+        <where>
+            <if test="typeId != null and typeId != ''"> and type_id = #{typeId} </if>
+            <if test="typeName != null and typeName != ''"> and type_name like concat('%',#{typeName},'%') </if>
+            <if test="typeDesc != null and typeDesc != ''"> and type_desc = #{typeDesc} </if>
+            <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+            <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+            <if test="createById != null and createById != ''"> and create_by_id = #{createById} </if>
+            <if test="updateById != null and updateById != ''"> and update_by_id = #{updateById} </if>
+            <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+            <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+        </where>
+    </select>
+
+    <!--根据id删除模板类型，若该类型下有模板，该模板类型不能删除-->
+    <delete id="remove">
+		delete from mb_template_type where mb_template_type.type_id = #{value} and mb_template_type.type_id not in
+		(select mb_template.type_id from mb_template where mb_template.type_id = mb_template_type.type_id)
+	</delete>
+
+    <!--批量删除模板类型，若该类型下有模板，该模板类型不能删除-->
+    <delete id="batchRemove">
+        delete from mb_template_type where mb_template_type.type_id in
+        <foreach item="typeId" collection="array" open="(" separator="," close=")">
+            #{typeId}
+        </foreach>
+        and mb_template_type.type_id not in
+        (select mb_template.type_id from mb_template where mb_template.type_id = mb_template_type.type_id)
+    </delete>
+
+    <!--通过模板类型名称查询模板类型对象-->
+    <select id="getByTypeName" parameterType="com.bootdo.template.domain.TemplateTypeDO" resultType="com.bootdo.template.domain.TemplateTypeDO">
+        select `type_id`,`type_name`,`type_desc`,`create_time`,`update_time`,`create_by_id`,`update_by_id`,`create_by`,`update_by` from mb_template_type where type_name = #{typeName}
+    </select>
+
+    <!--通过模板名称查询模板对象-->
+    <select id="getByTemplateName" parameterType="com.bootdo.template.domain.TemplateDO" resultType="com.bootdo.template.domain.TemplateDO">
+        select `template_id`,`template_name`,`template_language`,`template_content`,`template_version`,`effect_time`,`remarks`,`type_id`,`create_time`,`update_time`,`create_by_id`,`update_by_id`,`create_by`,`update_by` from mb_template where template_name = #{templateName}
+    </select>
+
+    <!--通过占位符名称查询占位符对象-->
+    <select id="getByPlaceholderName" parameterType="com.bootdo.template.domain.PlaceholderDO" resultType="com.bootdo.template.domain.PlaceholderDO">
+        select `placeholder_id`,`placeholder_code`,`placeholder_name`,`placeholder_type`,`placeholder_desc`,`create_time`,`update_time`,`create_by_id`,`update_by_id`,`create_by`,`update_by` from mb_placeholder where placeholder_name = #{placeholderName}
+    </select>
+
+</mapper>

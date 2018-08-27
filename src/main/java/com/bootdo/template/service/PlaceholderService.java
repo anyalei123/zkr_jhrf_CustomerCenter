@@ -61,4 +61,11 @@ public interface PlaceholderService {
 	 * @return
 	 */
 	int batchRemove(String[] placeholderIds);
+
+	/**
+	 * 通过占位符名称查询占位符对象
+	 * @param placeholder
+	 * @return
+	 */
+	PlaceholderDO getByPlaceholderName(PlaceholderDO placeholder);
 }
