@@ -214,5 +214,20 @@ public class TemplateTypeController extends BaseController {
 		TemplateTypeDO templateType = templateTypeService.get(typeId);
 		return templateType;
 	}
+
+	/**
+	 * 查看详情页面
+	 * @param typeId
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/showDetail/{typeId}")
+	@RequiresPermissions("template:templateType:templateType")
+	String showDetail(@PathVariable("typeId") String typeId,Model model){
+		//根据id查询模板类型
+		TemplateTypeDO templateType = templateTypeService.get(typeId);
+		model.addAttribute("templateType", templateType);
+		return "template/templateType/showDetail";
+	}
 	
 }
