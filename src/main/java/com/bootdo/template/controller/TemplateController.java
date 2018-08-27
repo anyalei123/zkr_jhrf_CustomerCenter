@@ -186,5 +186,20 @@ public class TemplateController extends BaseController {
 		//批量删除失败
 		return R.error();
 	}
+
+	/**
+	 * 查看详情页面
+	 * @param templateId
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/showDetail/{templateId}")
+	@RequiresPermissions("template:template:template")
+	String showDetail(@PathVariable("templateId") String templateId,Model model){
+		//根据模板id查询模板
+		TemplateDO template = templateService.get(templateId);
+		model.addAttribute("template", template);
+		return "template/template/showDetail";
+	}
 	
 }
