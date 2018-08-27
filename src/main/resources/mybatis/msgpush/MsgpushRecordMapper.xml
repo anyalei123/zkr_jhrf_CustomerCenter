@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.msgpush.dao.MsgpushRecordDao">
+
+	<select id="get" resultType="com.bootdo.msgpush.domain.MsgpushRecordDO">
+		select `message_id`,`message_type`,`message_content`,`message_phone`,`message_result`,`message_status`,`template_id`,`sender_name`,`send_time`,`recipient_type`,`recipient_name`,`recipient_mobile`,`recipient_email`,`institution_name`,`channel_name`,`msg_update_by`,`msg_update_time`,`create_time`,`update_time`,`msg_type_id`,`create_by_id`,`update_by_id`,`create_by`,`update_by` from xx_msgpush_record where message_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.msgpush.domain.MsgpushRecordDO">
+		select `message_id`,`message_type`,`message_content`,`message_phone`,`message_result`,`message_status`,`template_id`,`sender_name`,`send_time`,`recipient_type`,`recipient_name`,`recipient_mobile`,`recipient_email`,`institution_name`,`channel_name`,`msg_update_by`,`msg_update_time`,`create_time`,`update_time`,`msg_type_id`,`create_by_id`,`update_by_id`,`create_by`,`update_by` from xx_msgpush_record
+        <where>  
+		  		  <if test="messageId != null and messageId != ''"> and message_id = #{messageId} </if>
+		  		  <if test="messageType != null and messageType != ''"> and message_type = #{messageType} </if>
+		  		  <if test="messageContent != null and messageContent != ''"> and message_content = #{messageContent} </if>
+		  		  <if test="messagePhone != null and messagePhone != ''"> and message_phone = #{messagePhone} </if>
+		  		  <if test="messageResult != null and messageResult != ''"> and message_result = #{messageResult} </if>
+		  		  <if test="messageStatus != null and messageStatus != ''"> and message_status = #{messageStatus} </if>
+		  		  <if test="templateId != null and templateId != ''"> and template_id = #{templateId} </if>
+		  		  <if test="senderName != null and senderName != ''"> and sender_name = #{senderName} </if>
+		  		  <if test="sendTime != null and sendTime != ''"> and send_time = #{sendTime} </if>
+		  		  <if test="recipientType != null and recipientType != ''"> and recipient_type = #{recipientType} </if>
+		  		  <if test="recipientName != null and recipientName != ''"> and recipient_name = #{recipientName} </if>
+		  		  <if test="recipientMobile != null and recipientMobile != ''"> and recipient_mobile = #{recipientMobile} </if>
+		  		  <if test="recipientEmail != null and recipientEmail != ''"> and recipient_email = #{recipientEmail} </if>
+		  		  <if test="institutionName != null and institutionName != ''"> and institution_name = #{institutionName} </if>
+		  		  <if test="channelName != null and channelName != ''"> and channel_name = #{channelName} </if>
+		  		  <if test="msgUpdateBy != null and msgUpdateBy != ''"> and msg_update_by = #{msgUpdateBy} </if>
+		  		  <if test="msgUpdateTime != null and msgUpdateTime != ''"> and msg_update_time = #{msgUpdateTime} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="msgTypeId != null and msgTypeId != ''"> and msg_type_id = #{msgTypeId} </if>
+		  		  <if test="createById != null and createById != ''"> and create_by_id = #{createById} </if>
+		  		  <if test="updateById != null and updateById != ''"> and update_by_id = #{updateById} </if>
+		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by message_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from xx_msgpush_record
+		 <where>  
+		  		  <if test="messageId != null and messageId != ''"> and message_id = #{messageId} </if>
+		  		  <if test="messageType != null and messageType != ''"> and message_type = #{messageType} </if>
+		  		  <if test="messageContent != null and messageContent != ''"> and message_content = #{messageContent} </if>
+		  		  <if test="messagePhone != null and messagePhone != ''"> and message_phone = #{messagePhone} </if>
+		  		  <if test="messageResult != null and messageResult != ''"> and message_result = #{messageResult} </if>
+		  		  <if test="messageStatus != null and messageStatus != ''"> and message_status = #{messageStatus} </if>
+		  		  <if test="templateId != null and templateId != ''"> and template_id = #{templateId} </if>
+		  		  <if test="senderName != null and senderName != ''"> and sender_name = #{senderName} </if>
+		  		  <if test="sendTime != null and sendTime != ''"> and send_time = #{sendTime} </if>
+		  		  <if test="recipientType != null and recipientType != ''"> and recipient_type = #{recipientType} </if>
+		  		  <if test="recipientName != null and recipientName != ''"> and recipient_name = #{recipientName} </if>
+		  		  <if test="recipientMobile != null and recipientMobile != ''"> and recipient_mobile = #{recipientMobile} </if>
+		  		  <if test="recipientEmail != null and recipientEmail != ''"> and recipient_email = #{recipientEmail} </if>
+		  		  <if test="institutionName != null and institutionName != ''"> and institution_name = #{institutionName} </if>
+		  		  <if test="channelName != null and channelName != ''"> and channel_name = #{channelName} </if>
+		  		  <if test="msgUpdateBy != null and msgUpdateBy != ''"> and msg_update_by = #{msgUpdateBy} </if>
+		  		  <if test="msgUpdateTime != null and msgUpdateTime != ''"> and msg_update_time = #{msgUpdateTime} </if>
+		  		  <if test="createTime != null and createTime != ''"> and create_time = #{createTime} </if>
+		  		  <if test="updateTime != null and updateTime != ''"> and update_time = #{updateTime} </if>
+		  		  <if test="msgTypeId != null and msgTypeId != ''"> and msg_type_id = #{msgTypeId} </if>
+		  		  <if test="createById != null and createById != ''"> and create_by_id = #{createById} </if>
+		  		  <if test="updateById != null and updateById != ''"> and update_by_id = #{updateById} </if>
+		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.msgpush.domain.MsgpushRecordDO">
+		insert into xx_msgpush_record
+		(
+			`message_id`, 
+			`message_type`, 
+			`message_content`, 
+			`message_phone`, 
+			`message_result`, 
+			`message_status`, 
+			`template_id`, 
+			`sender_name`, 
+			`send_time`, 
+			`recipient_type`, 
+			`recipient_name`, 
+			`recipient_mobile`, 
+			`recipient_email`, 
+			`institution_name`, 
+			`channel_name`, 
+			`msg_update_by`, 
+			`msg_update_time`, 
+			`create_time`, 
+			`update_time`, 
+			`msg_type_id`, 
+			`create_by_id`, 
+			`update_by_id`, 
+			`create_by`, 
+			`update_by`
+		)
+		values
+		(
+			#{messageId}, 
+			#{messageType}, 
+			#{messageContent}, 
+			#{messagePhone}, 
+			#{messageResult}, 
+			#{messageStatus}, 
+			#{templateId}, 
+			#{senderName}, 
+			#{sendTime}, 
+			#{recipientType}, 
+			#{recipientName}, 
+			#{recipientMobile}, 
+			#{recipientEmail}, 
+			#{institutionName}, 
+			#{channelName}, 
+			#{msgUpdateBy}, 
+			#{msgUpdateTime}, 
+			#{createTime}, 
+			#{updateTime}, 
+			#{msgTypeId}, 
+			#{createById}, 
+			#{updateById}, 
+			#{createBy}, 
+			#{updateBy}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.msgpush.domain.MsgpushRecordDO">
+		update xx_msgpush_record 
+		<set>
+			<if test="messageType != null">`message_type` = #{messageType}, </if>
+			<if test="messageContent != null">`message_content` = #{messageContent}, </if>
+			<if test="messagePhone != null">`message_phone` = #{messagePhone}, </if>
+			<if test="messageResult != null">`message_result` = #{messageResult}, </if>
+			<if test="messageStatus != null">`message_status` = #{messageStatus}, </if>
+			<if test="templateId != null">`template_id` = #{templateId}, </if>
+			<if test="senderName != null">`sender_name` = #{senderName}, </if>
+			<if test="sendTime != null">`send_time` = #{sendTime}, </if>
+			<if test="recipientType != null">`recipient_type` = #{recipientType}, </if>
+			<if test="recipientName != null">`recipient_name` = #{recipientName}, </if>
+			<if test="recipientMobile != null">`recipient_mobile` = #{recipientMobile}, </if>
+			<if test="recipientEmail != null">`recipient_email` = #{recipientEmail}, </if>
+			<if test="institutionName != null">`institution_name` = #{institutionName}, </if>
+			<if test="channelName != null">`channel_name` = #{channelName}, </if>
+			<if test="msgUpdateBy != null">`msg_update_by` = #{msgUpdateBy}, </if>
+			<if test="msgUpdateTime != null">`msg_update_time` = #{msgUpdateTime}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="msgTypeId != null">`msg_type_id` = #{msgTypeId}, </if>
+			<if test="createById != null">`create_by_id` = #{createById}, </if>
+			<if test="updateById != null">`update_by_id` = #{updateById}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}</if>
+		</set>
+		where message_id = #{messageId}
+	</update>
+	
+	<delete id="remove">
+		delete from xx_msgpush_record where message_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from xx_msgpush_record where message_id in 
+		<foreach item="messageId" collection="array" open="(" separator="," close=")">
+			#{messageId}
+		</foreach>
+	</delete>
+
+</mapper>
