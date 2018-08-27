@@ -188,5 +188,20 @@ public class PlaceholderController extends BaseController {
 		//批量删除失败
 		return R.error();
 	}
+
+	/**
+	 * 查看详情页面
+	 * @param placeholderId
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/showDetail/{placeholderId}")
+	@RequiresPermissions("template:placeholder:placeholder")
+	String showDetail(@PathVariable("placeholderId") String placeholderId,Model model){
+		//根据占位符id查询占位符
+		PlaceholderDO placeholder = placeholderService.get(placeholderId);
+		model.addAttribute("placeholder", placeholder);
+		return "template/placeholder/showDetail";
+	}
 	
 }
