@@ -1,6 +1,7 @@
 package com.bootdo.template.service.impl;
 
 import com.bootdo.common.utils.GenerateSequenceUtil;
+import com.bootdo.template.dao.self.TemplateSelfDao;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,9 @@ public class TemplateTypeServiceImpl implements TemplateTypeService {
 	@Autowired
 	private TemplateTypeDao templateTypeDao;
 
+	@Autowired
+	private TemplateSelfDao templateSelfDao;
+
 	/**
 	 * 根据id查询模板类型
 	 * @param typeId
@@ -44,16 +48,6 @@ public class TemplateTypeServiceImpl implements TemplateTypeService {
 	@Override
 	public List<TemplateTypeDO> list(Map<String, Object> map){
 		return templateTypeDao.list(map);
-	}
-
-	/**
-	 * 查询模板类型列表数据
-	 * 将模板类型名称展示到模板添加页面的模板类型下拉选项中
-	 * @return
-	 */
-	@Override
-	public List<TemplateTypeDO> listJson(){
-		return templateTypeDao.listJson();
 	}
 
 	/**
@@ -93,7 +87,7 @@ public class TemplateTypeServiceImpl implements TemplateTypeService {
 	 */
 	@Override
 	public int remove(String typeId){
-		return templateTypeDao.remove(typeId);
+		return templateSelfDao.remove(typeId);
 	}
 
 	/**
@@ -103,7 +97,27 @@ public class TemplateTypeServiceImpl implements TemplateTypeService {
 	 */
 	@Override
 	public int batchRemove(String[] typeIds){
-		return templateTypeDao.batchRemove(typeIds);
+		return templateSelfDao.batchRemove(typeIds);
+	}
+
+	/**
+	 * 查询模板类型列表数据
+	 * 将模板类型名称展示到模板添加页面的模板类型下拉选项中
+	 * @return
+	 */
+	@Override
+	public List<TemplateTypeDO> listType(){
+		return templateSelfDao.listType();
+	}
+
+	/**
+	 * 通过模板类型名称查询模板类型对象
+	 * @param templateType
+	 * @return
+	 */
+	@Override
+	public TemplateTypeDO getByTypeName(TemplateTypeDO templateType){
+		return templateSelfDao.getByTypeName(templateType);
 	}
 	
 }
