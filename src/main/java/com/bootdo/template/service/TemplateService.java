@@ -61,4 +61,11 @@ public interface TemplateService {
 	 * @return
 	 */
 	int batchRemove(String[] templateIds);
+
+	/**
+	 * 通过模板名称查询模板对象
+	 * @param template
+	 * @return
+	 */
+	TemplateDO getByTemplateName(TemplateDO template);
 }
