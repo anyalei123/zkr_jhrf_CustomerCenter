@@ -2,7 +2,7 @@ $().ready(function() {
 	//模板类型的回显
     $.ajax({
         type : "GET",
-        url : "/template/templateType/listJson",
+        url : "/template/templateType/listType",
         dataType : "json",
         async : false,
         success : function(data) {
