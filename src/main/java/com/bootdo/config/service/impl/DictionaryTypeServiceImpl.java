@@ -12,7 +12,13 @@ import com.bootdo.config.domain.DictionaryTypeDO;
 import com.bootdo.config.service.DictionaryTypeService;
 
 
-
+/**
+ * 字典类型管理
+ *
+ * @author anyalei
+ * @email anyalei163@163.com
+ * @date 2018-08-21 16:11:18
+ */
 @Service
 public class DictionaryTypeServiceImpl implements DictionaryTypeService {
 
