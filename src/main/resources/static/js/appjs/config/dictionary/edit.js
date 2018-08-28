@@ -20,14 +20,22 @@ $().ready(function() {
     });
     //删除标记回显
     var delSelect = $("#delFlag");
-	var delFlag = delSelect.val();
-	if(delFlag == "0"){
-		$("#delOption").text("未删除");
-        delSelect.append("<option value='1'>已删除</option>");
-	}else if(delFlag == "1"){
-        $("#delOption").text("已删除");
-        delSelect.append("<option value='0'>未删除</option>");
-	}
+	var delFlag = $("#hiddenInput").val();
+    $.ajax({
+        type : "GET",
+        url : "/config/dictionary/getByType/"+encodeURI(encodeURI("删除标记")),
+        dataType : "json",
+        async : false,
+        success : function(data) {
+            $(data).each(function (index, dictionary) {
+                if (dictionary.dictValue == delFlag){
+                    delSelect.append("<option selected value="+dictionary.dictValue+">"+dictionary.dictName+"</option>");
+                }else{
+                    delSelect.append("<option value="+dictionary.dictValue+">"+dictionary.dictName+"</option>");
+                }
+            })
+        }
+    });
 });
 
 $.validator.setDefaults({
@@ -63,15 +71,35 @@ function update() {
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
-		rules : {
-			name : {
-				required : true
-			}
-		},
-		messages : {
-			name : {
-				required : icon + "请输入名字"
-			}
+        rules : {
+            typeId : {
+                required : true,
+                min : 0
+            },
+            dictName : {
+                required : true
+            },
+            dictValue : {
+                required : true
+            },
+            dictDesc : {
+                required : true
+            }
+        },
+        messages : {
+            typeId : {
+                required : icon + "请选择字典类型！",
+                min: icon + "请选择字典类型！"
+            },
+            dictName : {
+                required : icon + "请输入字典名称！"
+            },
+            dictValue : {
+                required : icon + "请输入字典数据值！"
+            },
+            dictDesc : {
+                required : icon + "请输入字典描述！"
+            }
 		}
 	})
 }
