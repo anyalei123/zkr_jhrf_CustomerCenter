@@ -21,7 +21,6 @@ $.validator.setDefaults({
 	}
 });
 
-
 function save() {
 	$.ajax({
 		cache : true,
@@ -51,14 +50,34 @@ function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
 		rules : {
-			name : {
-				required : true
-			}
+            typeId : {
+				required : true,
+				min : 0
+			},
+            dictName : {
+                required : true
+            },
+            dictValue : {
+                required : true
+            },
+            dictDesc : {
+                required : true
+            }
 		},
 		messages : {
-			name : {
-				required : icon + "请输入姓名"
-			}
+            typeId : {
+				required : icon + "请选择字典类型！",
+				min: icon + "请选择字典类型！"
+			},
+            dictName : {
+                required : icon + "请输入字典名称！"
+            },
+            dictValue : {
+                required : icon + "请输入字典数据值！"
+            },
+            dictDesc : {
+                required : icon + "请输入字典描述！"
+            }
 		}
 	})
 }
