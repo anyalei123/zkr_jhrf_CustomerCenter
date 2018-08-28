@@ -46,8 +46,8 @@
 								<label class="col-sm-3 control-label">删除标记：</label>
 								<div class="col-sm-8">
 									<select id="delFlag" name="delFlag" class="form-control">
-										<option id="delOption" th:value="${dictionary.delFlag}" selected></option>
 									</select>
+									<input id="hiddenInput" th:value="${dictionary.delFlag}" type="hidden">
 								</div>
 							</div>
 							<div class="form-group">
