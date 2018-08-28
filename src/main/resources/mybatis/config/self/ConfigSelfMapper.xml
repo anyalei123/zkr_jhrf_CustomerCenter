@@ -50,7 +50,12 @@
 	<!--根据字典类型名称查询字典对象-->
 	<select id="getByType" parameterType="string" resultType="com.bootdo.config.domain.DictionaryDO">
          select a.`dict_id`,a.`dict_name`,a.`dict_value`,a.`dict_desc`,a.`dict_sort`,a.`del_flag`,a.`remarks`,a.`parent_id`,a.`type_id`,a.`create_time`,a.`update_time`,a.`create_by_id`,a.`update_by_id`,a.`create_by`,a.`update_by`
-         from pz_dictionary as a inner join pz_dictionary_type as b on a.type_id = b.type_id and b.type_name = #{value} order by a.dict_sort asc
+         from pz_dictionary as a inner join pz_dictionary_type as b on a.type_id = b.type_id and b.type_name = #{value} and a.del_flag = '0' order by a.dict_sort asc
+	</select>
+
+	<!--根据字典数据值查询字典对象-->
+	<select id="getByValue" parameterType="string" resultType="com.bootdo.config.domain.DictionaryDO">
+		select `dict_id`,`dict_name`,`dict_value`,`dict_desc`,`dict_sort`,`del_flag`,`remarks`,`parent_id`,`type_id`,`create_time`,`update_time`,`create_by_id`,`update_by_id`,`create_by`,`update_by` from pz_dictionary where dict_value = #{dictValue}
 	</select>
 
 </mapper>
