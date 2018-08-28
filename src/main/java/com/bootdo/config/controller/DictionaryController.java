@@ -1,5 +1,7 @@
 package com.bootdo.config.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -25,25 +27,34 @@ import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.R;
 
 /**
- * 字典表
+ * 字典管理
  * 
  * @author anyalei
  * @email anyalei163@163.com
  * @date 2018-08-21 16:11:18
  */
- 
 @Controller
 @RequestMapping("/config/dictionary")
 public class DictionaryController extends BaseController {
+
 	@Autowired
 	private DictionaryService dictionaryService;
-	
+
+	/**
+	 * 到字典列表页面
+	 * @return
+	 */
 	@GetMapping()
 	@RequiresPermissions("config:dictionary:dictionary")
 	String Dictionary(){
 	    return "config/dictionary/dictionary";
 	}
-	
+
+	/**
+	 * 查询字典列表数据
+	 * @param params
+	 * @return
+	 */
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("config:dictionary:dictionary")
@@ -55,13 +66,23 @@ public class DictionaryController extends BaseController {
 		PageUtils pageUtils = new PageUtils(dictionaryList, total);
 		return pageUtils;
 	}
-	
+
+	/**
+	 * 到字典增加页面
+	 * @return
+	 */
 	@GetMapping("/add")
 	@RequiresPermissions("config:dictionary:add")
 	String add(){
 	    return "config/dictionary/add";
 	}
 
+	/**
+	 * 到字典修改页面
+	 * @param dictId
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/edit/{dictId}")
 	@RequiresPermissions("config:dictionary:edit")
 	String edit(@PathVariable("dictId") String dictId,Model model){
@@ -69,9 +90,11 @@ public class DictionaryController extends BaseController {
 		model.addAttribute("dictionary", dictionary);
 	    return "config/dictionary/edit";
 	}
-	
+
 	/**
-	 * 保存
+	 * 保存字典数据
+	 * @param dictionary
+	 * @return
 	 */
 	@ResponseBody
 	@PostMapping("/save")
@@ -102,8 +125,11 @@ public class DictionaryController extends BaseController {
 		}
 		return R.error();
 	}
+
 	/**
-	 * 修改
+	 * 修改字典数据
+	 * @param dictionary
+	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
@@ -126,22 +152,26 @@ public class DictionaryController extends BaseController {
 		dictionaryService.update(dictionary);
 		return R.ok();
 	}
-	
+
 	/**
-	 * 删除
+	 * 根据id删除
+	 * @param dictId
+	 * @return
 	 */
 	@PostMapping( "/remove")
 	@ResponseBody
 	@RequiresPermissions("config:dictionary:remove")
 	public R remove( String dictId){
 		if(dictionaryService.remove(dictId)>0){
-		return R.ok();
+			return R.ok();
 		}
 		return R.error();
 	}
-	
+
 	/**
-	 * 删除
+	 * 批量删除
+	 * @param dictIds
+	 * @return
 	 */
 	@PostMapping( "/batchRemove")
 	@ResponseBody
@@ -150,9 +180,12 @@ public class DictionaryController extends BaseController {
 		dictionaryService.batchRemove(dictIds);
 		return R.ok();
 	}
-	
+
 	/**
 	 * 查看字典详情
+	 * @param dictId
+	 * @param model
+	 * @return
 	 */
 	@GetMapping("/showDetail/{dictId}")
 	@RequiresPermissions("config:dictionary:showDetail")
@@ -161,5 +194,19 @@ public class DictionaryController extends BaseController {
 		model.addAttribute("dictionary",dictionaryDO);
 		return "config/dictionary/showDetail";
 	}
+
+	/**
+	 * 根据字典类型名称查询字典数据
+	 * @param typeName
+	 * @return
+	 */
+	@GetMapping("/getByType/{typeName}")
+	@ResponseBody
+	@RequiresPermissions("config:dictionary:dictionary")
+	public List<DictionaryDO> getByType(@PathVariable("typeName") String typeName) throws UnsupportedEncodingException {
+        typeName = URLDecoder.decode(typeName,"UTF-8");
+        List<DictionaryDO> dictionaryList = dictionaryService.getByType(typeName);
+        return dictionaryList;
+    }
 
 }
