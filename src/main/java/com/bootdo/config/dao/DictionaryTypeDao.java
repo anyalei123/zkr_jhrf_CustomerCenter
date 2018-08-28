@@ -8,7 +8,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * 字典类型表
+ * 字典类型管理
  * @author anyalei
  * @email anyalei163@163.com
  * @date 2018-08-21 16:11:18
