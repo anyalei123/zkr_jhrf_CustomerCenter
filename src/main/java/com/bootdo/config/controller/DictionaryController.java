@@ -162,7 +162,9 @@ public class DictionaryController extends BaseController {
 	@ResponseBody
 	@RequiresPermissions("config:dictionary:remove")
 	public R remove( String dictId){
-		if(dictionaryService.remove(dictId)>0){
+		DictionaryDO dictionary = dictionaryService.get(dictId);
+		dictionary.setDelFlag("1");
+		if(dictionaryService.update(dictionary)>0){
 			return R.ok();
 		}
 		return R.error();
@@ -177,7 +179,11 @@ public class DictionaryController extends BaseController {
 	@ResponseBody
 	@RequiresPermissions("config:dictionary:batchRemove")
 	public R remove(@RequestParam("ids[]") String[] dictIds){
-		dictionaryService.batchRemove(dictIds);
+		for (String dictId: dictIds) {
+			DictionaryDO dictionary = dictionaryService.get(dictId);
+			dictionary.setDelFlag("1");
+			dictionaryService.update(dictionary);
+		}
 		return R.ok();
 	}
 
@@ -208,5 +214,18 @@ public class DictionaryController extends BaseController {
         List<DictionaryDO> dictionaryList = dictionaryService.getByType(typeName);
         return dictionaryList;
     }
+
+	/**
+	 * 根据字典数据值查询字典对象
+	 * @param dictValue
+	 * @return
+	 */
+	@GetMapping("/getByValue/{dictValue}")
+	@ResponseBody
+	@RequiresPermissions("config:dictionary:dictionary")
+	public DictionaryDO getByValue(@PathVariable("dictValue") String dictValue){
+		List<DictionaryDO> dictionaryList = dictionaryService.getByValue(dictValue);
+		return dictionaryList.get(0);
+	}
 
 }
