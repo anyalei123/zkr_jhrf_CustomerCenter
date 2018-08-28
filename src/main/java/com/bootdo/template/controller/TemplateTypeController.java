@@ -222,7 +222,7 @@ public class TemplateTypeController extends BaseController {
 	 * @return
 	 */
 	@GetMapping("/showDetail/{typeId}")
-	@RequiresPermissions("template:templateType:templateType")
+	@RequiresPermissions("template:templateType:showDetail")
 	String showDetail(@PathVariable("typeId") String typeId,Model model){
 		//根据id查询模板类型
 		TemplateTypeDO templateType = templateTypeService.get(typeId);

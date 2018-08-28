@@ -194,7 +194,7 @@ public class TemplateController extends BaseController {
 	 * @return
 	 */
 	@GetMapping("/showDetail/{templateId}")
-	@RequiresPermissions("template:template:template")
+	@RequiresPermissions("template:template:showDetail")
 	String showDetail(@PathVariable("templateId") String templateId,Model model){
 		//根据模板id查询模板
 		TemplateDO template = templateService.get(templateId);

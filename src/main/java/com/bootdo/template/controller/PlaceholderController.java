@@ -196,7 +196,7 @@ public class PlaceholderController extends BaseController {
 	 * @return
 	 */
 	@GetMapping("/showDetail/{placeholderId}")
-	@RequiresPermissions("template:placeholder:placeholder")
+	@RequiresPermissions("template:placeholder:showDetail")
 	String showDetail(@PathVariable("placeholderId") String placeholderId,Model model){
 		//根据占位符id查询占位符
 		PlaceholderDO placeholder = placeholderService.get(placeholderId);
