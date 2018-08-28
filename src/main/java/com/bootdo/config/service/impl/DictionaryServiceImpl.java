@@ -12,7 +12,13 @@ import com.bootdo.config.domain.DictionaryDO;
 import com.bootdo.config.service.DictionaryService;
 
 
-
+/**
+ * 字典管理
+ *
+ * @author anyalei
+ * @email anyalei163@163.com
+ * @date 2018-08-21 16:11:18
+ */
 @Service
 public class DictionaryServiceImpl implements DictionaryService {
 
@@ -65,6 +71,16 @@ public class DictionaryServiceImpl implements DictionaryService {
 	@Override
 	public DictionaryDO getByDictName(DictionaryDO dictionaryDO){
 		return configSelfDao.getByDictName(dictionaryDO);
+	}
+
+	/**
+	 * 根据字典类型名称查询字典数据
+	 * @param typeName
+	 * @return
+	 */
+	@Override
+	public List<DictionaryDO> getByType(String typeName){
+		return configSelfDao.getByType(typeName);
 	}
 	
 }
