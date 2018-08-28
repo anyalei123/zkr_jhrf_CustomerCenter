@@ -6,14 +6,28 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 字典类型表
+ * 字典类型管理
  * 
  * @author anyalei
  * @email anyalei163@163.com
  * @date 2018-08-21 16:11:18
  */
 public interface DictionaryTypeService {
+
+	DictionaryTypeDO get(String typeId);
 	
+	List<DictionaryTypeDO> list(Map<String, Object> map);
+	
+	int count(Map<String, Object> map);
+	
+	int save(DictionaryTypeDO dictionaryType);
+	
+	int update(DictionaryTypeDO dictionaryType);
+	
+	int remove(String typeId);
+	
+	int batchRemove(String[] typeIds);
+
 	/**
 	 * 通过字典类型名称查询对象
 	 * @param
@@ -42,19 +56,5 @@ public interface DictionaryTypeService {
 	 * @return
 	 */
 	int batchRemove1(String[] typeIds);
-
-	DictionaryTypeDO get(String typeId);
-	
-	List<DictionaryTypeDO> list(Map<String, Object> map);
-	
-	int count(Map<String, Object> map);
-	
-	int save(DictionaryTypeDO dictionaryType);
-	
-	int update(DictionaryTypeDO dictionaryType);
-	
-	int remove(String typeId);
-	
-	int batchRemove(String[] typeIds);
 	
 }
