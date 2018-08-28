@@ -47,4 +47,10 @@
 		(select pz_dictionary.type_id from pz_dictionary where pz_dictionary.type_id = pz_dictionary_type.type_id)
 	</delete>
 
+	<!--根据字典类型名称查询字典对象-->
+	<select id="getByType" parameterType="string" resultType="com.bootdo.config.domain.DictionaryDO">
+         select a.`dict_id`,a.`dict_name`,a.`dict_value`,a.`dict_desc`,a.`dict_sort`,a.`del_flag`,a.`remarks`,a.`parent_id`,a.`type_id`,a.`create_time`,a.`update_time`,a.`create_by_id`,a.`update_by_id`,a.`create_by`,a.`update_by`
+         from pz_dictionary as a inner join pz_dictionary_type as b on a.type_id = b.type_id and b.type_name = #{value} order by a.dict_sort asc
+	</select>
+
 </mapper>
