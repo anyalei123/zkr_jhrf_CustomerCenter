@@ -7,7 +7,7 @@ import java.util.Date;
 
 
 /**
- * 字典类型表
+ * 字典类型管理
  * 
  * @author anyalei
  * @email anyalei163@163.com
