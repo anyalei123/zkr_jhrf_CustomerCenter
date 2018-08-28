@@ -6,7 +6,7 @@ $().ready(function() {
         min:  timestr//最小时间
     });
 
-	//选择模板类型
+	//查询模板类型
     $.ajax({
         type : "GET",
         url : "/template/templateType/listType",
@@ -16,6 +16,20 @@ $().ready(function() {
             var select = $("#typeId");
             $(data).each(function (index, type) {
                 select.append("<option value="+type.typeId+">"+type.typeName+"</option>");
+            })
+        }
+    });
+
+    //查询模板语言
+    var select = $("#templateLanguage");
+    $.ajax({
+        type : "GET",
+        url : "/config/dictionary/getByType/"+encodeURI(encodeURI("语言")),
+        dataType : "json",
+        async : false,
+        success : function(data) {
+            $(data).each(function (index, dictionary) {
+                select.append("<option value="+dictionary.dictValue+">"+dictionary.dictName+"</option>");
             })
         }
     });

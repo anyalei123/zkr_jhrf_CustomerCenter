@@ -20,17 +20,22 @@ $().ready(function() {
 
 	//模板语言的回显
     var select = $("#templateLanguage");
-    var language = select.val();
-    if(language=="简体中文"){
-        select.append("<option value='繁体中文'>繁体中文</option>");
-        select.append("<option value='English'>English</option>");
-    }else if(language=="繁体中文"){
-        select.append("<option value='简体中文'>简体中文</option>");
-        select.append("<option value='English'>English</option>");
-    }else if(language=="English"){
-        select.append("<option value='简体中文'>简体中文</option>");
-        select.append("<option value='繁体中文'>繁体中文</option>");
-	}
+    var templateLanguage = $("#hiddenInput").val();
+    $.ajax({
+        type : "GET",
+        url : "/config/dictionary/getByType/"+encodeURI(encodeURI("语言")),
+        dataType : "json",
+        async : false,
+        success : function(data) {
+            $(data).each(function (index, dictionary) {
+                if (dictionary.dictValue == templateLanguage){
+                    select.append("<option selected value="+dictionary.dictValue+">"+dictionary.dictName+"</option>");
+                }else{
+                    select.append("<option value="+dictionary.dictValue+">"+dictionary.dictName+"</option>");
+                }
+            })
+        }
+    });
 
     //模板生效时间
     laydate.render({

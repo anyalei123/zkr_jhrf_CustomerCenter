@@ -1,5 +1,4 @@
 var prefix = "/template/template"
-var typeName;
 $(function() {
     //选择模板类型
     $.ajax({
@@ -11,6 +10,19 @@ $(function() {
             var select = $("#typeId");
             $(data).each(function (index, type) {
                 select.append("<option value="+type.typeId+">"+type.typeName+"</option>");
+            })
+        }
+    });
+    //选择模板语言
+    var select = $("#templateLanguage");
+    $.ajax({
+        type : "GET",
+        url : "/config/dictionary/getByType/"+encodeURI(encodeURI("语言")),
+        dataType : "json",
+        async : false,
+        success : function(data) {
+            $(data).each(function (index, dictionary) {
+                select.append("<option value="+dictionary.dictValue+">"+dictionary.dictName+"</option>");
             })
         }
     });
@@ -73,7 +85,20 @@ function load() {
 								},
 								{
 									field : 'templateLanguage', 
-									title : '语言'
+									title : '语言',
+                                    formatter : function format1(value,row,index){
+										var dictName;
+                                        $.ajax({
+                                            type : "GET",
+                                            url : "/config/dictionary/getByValue/"+value,
+                                            dataType : "json",
+                                            async : false,
+                                            success : function(data) {
+                                                dictName = data.dictName;
+                                            }
+                                        });
+                                        return dictName;
+                                    }
 								},
 								{
 									field : 'templateContent', 
@@ -94,7 +119,8 @@ function load() {
 								{
 									field : 'typeId',
 									title : '类型',
-									formatter : function format(value,row,index){
+									formatter : function format2(value,row,index){
+										var typeName;
 										$.ajax({
 											type : "GET",
 											url : "/template/templateType/get/"+value,
