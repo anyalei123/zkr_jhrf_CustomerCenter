@@ -82,5 +82,15 @@ public class DictionaryServiceImpl implements DictionaryService {
 	public List<DictionaryDO> getByType(String typeName){
 		return configSelfDao.getByType(typeName);
 	}
+
+	/**
+	 * 根据字典数据值查询字典对象
+	 * @param dictValue
+	 * @return
+	 */
+	@Override
+	public List<DictionaryDO> getByValue(String dictValue){
+		return configSelfDao.getByValue(dictValue);
+	}
 	
 }
