@@ -9,7 +9,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * 字典类型表
+ * 配置管理
  * @author anyalei
  * @email anyalei163@163.com
  * @date 2018-08-21 16:11:18
@@ -52,6 +52,13 @@ public interface ConfigSelfDao {
 	 * @return
 	 */
 	int batchRemove1(String[] typeIds);
+
+	/**
+	 * 根据字典类型名称查询字典数据
+	 * @param typeName
+	 * @return
+	 */
+	List<DictionaryDO> getByType(String typeName);
 	
 	
 }
