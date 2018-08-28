@@ -59,6 +59,13 @@ public interface ConfigSelfDao {
 	 * @return
 	 */
 	List<DictionaryDO> getByType(String typeName);
+
+	/**
+	 * 根据字典数据值查询字典对象
+	 * @param dictValue
+	 * @return
+	 */
+	List<DictionaryDO> getByValue(String dictValue);
 	
 	
 }
