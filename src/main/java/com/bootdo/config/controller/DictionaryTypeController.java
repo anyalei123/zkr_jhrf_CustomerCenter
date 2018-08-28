@@ -24,26 +24,34 @@ import com.bootdo.config.domain.DictionaryTypeDO;
 import com.bootdo.config.service.DictionaryTypeService;
 
 /**
- * 字典类型表
+ * 字典类型管理
  * 
  * @author anyalei
  * @email anyalei163@163.com
  * @date 2018-08-21 16:11:18
  */
- 
 @Controller
 @RequestMapping("/config/dictionaryType")
 public class DictionaryTypeController extends BaseController {
 
 	@Autowired
 	private DictionaryTypeService dictionaryTypeService;
-	
+
+	/**
+	 * 到字典类型列表页面
+	 * @return
+	 */
 	@GetMapping()
 	@RequiresPermissions("config:dictionaryType:dictionaryType")
 	String DictionaryType(){
 	    return "config/dictionaryType/dictionaryType";
 	}
-	
+
+	/**
+	 * 查询字典类型列表数据
+	 * @param params
+	 * @return
+	 */
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("config:dictionaryType:dictionaryType")
@@ -55,13 +63,23 @@ public class DictionaryTypeController extends BaseController {
 		PageUtils pageUtils = new PageUtils(dictionaryTypeList, total);
 		return pageUtils;
 	}
-	
+
+	/**
+	 * 到字典类型增加页面
+	 * @return
+	 */
 	@GetMapping("/add")
 	@RequiresPermissions("config:dictionaryType:add")
 	String add(){
 	    return "config/dictionaryType/add";
 	}
 
+	/**
+	 * 到字典类型修改页面
+	 * @param typeId
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/edit/{typeId}")
 	@RequiresPermissions("config:dictionaryType:edit")
 	String edit(@PathVariable("typeId") String typeId,Model model){
@@ -69,9 +87,11 @@ public class DictionaryTypeController extends BaseController {
 		model.addAttribute("dictionaryType", dictionaryType);
 	    return "config/dictionaryType/edit";
 	}
-	
+
 	/**
-	 * 保存
+	 * 保存字典类型
+	 * @param dictionaryType
+	 * @return
 	 */
 	@ResponseBody
 	@PostMapping("/save")
@@ -96,7 +116,6 @@ public class DictionaryTypeController extends BaseController {
 		//去除空格
 		dictionaryType.setTypeValue(dictionaryType.getTypeValue().trim());
 		dictionaryType.setTypeName(dictionaryType.getTypeName().trim());
-
 		if(dictionaryTypeService.save(dictionaryType)>0){
 			return R.ok();
 		}
@@ -104,7 +123,9 @@ public class DictionaryTypeController extends BaseController {
 	}
 
 	/**
-	 * 修改
+	 * 修改字典类型
+	 * @param dictionaryType
+	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
@@ -127,9 +148,11 @@ public class DictionaryTypeController extends BaseController {
 		dictionaryTypeService.update(dictionaryType);
 		return R.ok();
 	}
-	
+
 	/**
-	 * 删除
+	 * 根据id删除
+	 * @param typeId
+	 * @return
 	 */
 	@PostMapping( "/remove")
 	@ResponseBody
@@ -143,6 +166,9 @@ public class DictionaryTypeController extends BaseController {
 
 	/**
 	 * 批量删除
+	 * @param typeIds
+	 * @param selectRows
+	 * @return
 	 */
 	@PostMapping( "/batchRemove")
 	@ResponseBody
@@ -157,16 +183,18 @@ public class DictionaryTypeController extends BaseController {
 		int errorRows = selectRows - removeRows;
 		return R.error(errorRows+"条数据删除失败，失败原因：类型下有数据，类型不能删除");
 	}
-	
+
 	/**
-	 * 查看详细信息
+	 * 查看详情信息
+	 * @param typeId
+	 * @param model
+	 * @return
 	 */
 	@GetMapping("/showDetail/{typeId}")
 	@RequiresPermissions("config:dictionaryType:showDetail")
 	String showDetail(@PathVariable("typeId") String typeId,Model model){
 		//根据id查询并显示到明细页面
 		DictionaryTypeDO dictionaryType = dictionaryTypeService.get(typeId);
-		
 		model.addAttribute("dictionaryType", dictionaryType);
 	    return "config/dictionaryType/showDetail";
 	}
