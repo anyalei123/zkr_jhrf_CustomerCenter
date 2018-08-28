@@ -103,11 +103,19 @@
             });
             //删除标记的格式化
             var delFlag = $("#delFlag").val();
-            if(delFlag == "0"){
-                $("#delFlag").val("未删除");
-			}else if(delFlag == "1"){
-                $("#delFlag").val("已删除");
-			}
+            $.ajax({
+                type : "GET",
+                url : "/config/dictionary/getByType/"+encodeURI(encodeURI("删除标记")),
+                dataType : "json",
+                async : false,
+                success : function(data) {
+                    $(data).each(function (index, dictionary) {
+                        if (dictionary.dictValue == delFlag){
+                            $("#delFlag").val(dictionary.dictName);
+                        }
+                    })
+                }
+            });
 		});
         function back() {
             var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
