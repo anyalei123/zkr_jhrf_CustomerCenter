@@ -20,8 +20,8 @@
 								<label class="col-sm-3 control-label">语言：</label>
 								<div class="col-sm-8">
 									<select id="templateLanguage" name="templateLanguage" class="form-control" >
-										<option selected th:value="${template.templateLanguage}" th:text="${template.templateLanguage}"></option>
 									</select>
+									<input id="hiddenInput" th:value="${template.templateLanguage}" type="hidden">
 								</div>
 							</div>
 							<div class="form-group">

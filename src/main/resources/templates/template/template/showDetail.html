@@ -102,6 +102,17 @@
                 $("#typeId").val(data.typeName);
             }
         });
+        //模板语言的格式化
+        var templateLanguage = $("#templateLanguage").val();
+        $.ajax({
+            type : "GET",
+            url : "/config/dictionary/getByValue/"+templateLanguage,
+            dataType : "json",
+            async : false,
+            success : function(data) {
+                $("#templateLanguage").val(data.dictName);
+            }
+        });
     });
     function back() {
         var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
